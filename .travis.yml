@@ -14,7 +14,7 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "grace-shopper-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "gs-indigo-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
   - npm test             # test the code
   - npm run build-client # make the bundle
@@ -24,6 +24,6 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: grace-shopper # see README
+  app: gs-indigo # see README
   api_key:
     secure: "VSJKiKrbu383v1UWPvoEICZh8tdXugm/pqKfJq+Hy6S7z8fYDqlj3Hh6mGTNEXojYFFVsHH/N37DCKPPCbvXEwXUXR3ZR+P1aFISXF+k3Cm3LMpG/lYfxJNB6L/HOR9Wb2qBjsrurJwPuYXolh1GbD36fge4GNFGp/2zqSicXQHAJw6d7LoqMW9ZO23QyXz7/8KUid/FHL/ruR6sr7IB9+6Te9Fc0kJiLhvDZQIVKvTyWDjMGwU7Un3fs+elDHqo8tKH6X4jT7Eyr1nwUCK0HWk19m0Wfaj/a9W3KuFnvWSfIINCc1Q+PJsE56QkivGhjzmzSub+hV77TW2Dkk1pM1n8PZLBAP1wq9IWhJ9sYP3nivNMnTgg0Rcfzfg//U9fOBCspe65TADU7fa7YzWtaanm+F3/0L3GHeMhI6ccRLqzGbiI1yyJkNmgw/KMUpNhASle0VmTLw0fdz3FuCft29uin8xBdXkuyF0ESNTKnYYlt5jVlMD9UEPUOTSx+KmNJEdUNG+A7qHwYdLNUt7IsnhALtij2mjtRQ5VxaUKsMyapPqvNum7r7q+TMerbDg+ig3WdIz5DqQIa+TZ1GCsb2m58/3LOBjh2LkuXxDL7mHV+bHGg5F/LgnS1sRuz3Jvk7COYGc3Kz1oQYOPePTok+oNkoaY/RDgUaf9BIS3mJk=" # see README

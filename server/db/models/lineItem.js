@@ -12,7 +12,7 @@ const LineItem = db.define('lineItem', {
     }
   },
   discountAmount: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER
   }
 })
 

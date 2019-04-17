@@ -6,7 +6,7 @@ const Products = db.define('products', {
     type: Sequelize.STRING
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     validate: {
       notEmpty: true,
       min: 0
@@ -18,7 +18,20 @@ const Products = db.define('products', {
       'https://s3.amazonaws.com/peoplepng/wp-content/uploads/2018/03/25053846/Jet-PNG-Image.png'
   },
   house: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    validate: {
+      isIn: [
+        [
+          'Stark',
+          'Targaryan',
+          'Lannister',
+          'Tyrell',
+          'Baratheon',
+          'Greyjoy',
+          'Tully'
+        ]
+      ]
+    }
   },
   productCategory: {
     type: Sequelize.STRING

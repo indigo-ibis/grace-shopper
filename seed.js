@@ -11,35 +11,35 @@ const productsArr = [
     name: 'John Snow Figurine',
     price: 34,
     imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
-    house: 'stark',
+    house: 'Stark',
     productCategory: 'figurine'
   },
   {
     name: 'Needle Replica',
     price: 154,
     imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
-    house: 'stark',
+    house: 'Stark',
     productCategory: 'replica'
   },
   {
     name: 'Podrick Figurine',
     price: 34,
     imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
-    house: '???',
+    house: 'Tyrell',
     productCategory: 'figurine'
   },
   {
     name: 'Danaerys Stormborn first of her name, plush pillow',
     price: 24,
     imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
-    house: 'targerys',
+    house: 'Targaryan',
     productCategory: 'memoribilia'
   },
   {
     name: 'Life Size Iron Throne Replica',
     price: 3299,
     imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
-    house: 'stark',
+    house: 'Stark',
     productCategory: 'figurine'
   }
 ]

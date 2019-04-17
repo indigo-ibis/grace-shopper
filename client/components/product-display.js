@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {loadSelectedProducts} from './../store'
 import queryString from 'query-string'
@@ -27,7 +26,6 @@ class productsDisplay extends React.Component {
   }
 
   render() {
-    console.log(this.props.products)
     if (!this.state.loaded) {
       return <h1>Loading...</h1>
     }

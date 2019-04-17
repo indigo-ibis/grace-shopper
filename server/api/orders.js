@@ -35,7 +35,7 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-// creating a new ORDER (collection of order items)
+// creating a new order (collection of order items)
 router.post('/', async (req, res, next) => {
   try {
     const newOrder = await Order.create({
@@ -49,7 +49,36 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// adding a new ORDER ITEM to an order
+// editing an order's associated user
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId)
+    if (!order) {
+      res.sendStatus(404)
+    } else {
+      await order.update({userId : req.body.userId})
+      .then(res.json(order))
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// clear an entire order/cart
+router.get('/:orderId/clear', async (req, res, next) => {
+  try {
+    await LineItem.destroy({
+      where: {
+        orderId : req.params.orderId
+      }
+    })
+    .then(() => res.sendStatus(200))
+  } catch (err) {
+    next(err)
+  }
+})
+
+// adding a new line item to an order
 router.post('/:orderId', async (req, res, next) => {
   try {
     const newLineItem = await LineItem.create({
@@ -58,6 +87,17 @@ router.post('/:orderId', async (req, res, next) => {
       quantity: req.body.quantity
     })
     res.json(newLineItem)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// removing a single line item (if the amount has been changed to 0)
+router.delete('/lineItem/:lineItemId', async (req, res, next) => {
+  try {
+    const lineItem = await LineItem.findByPk(req.params.lineItemId)
+    await lineItem.destroy()
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }

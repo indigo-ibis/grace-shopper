@@ -35,3 +35,18 @@ router.get('/:productId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create({
+      name : req.body.name,
+      price : req.body.price,
+      imageUrl : req.body.imageUrl,
+      house : req.body.house,
+      productCategory : req.body.productCategory
+    })
+    res.json(newProduct)
+  } catch (err) {
+    next(err)
+  }
+})

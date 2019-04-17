@@ -1,5 +1,10 @@
 body {
   font-family: sans-serif;
+  background-color: black;
+}
+
+img {
+  width: 100%;
 }
 
 a {

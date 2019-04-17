@@ -6,16 +6,17 @@ router.get('/', async (req, res, next) => {
   try {
     const filters = {};
 
-    if (req.query.house) {
+    if (req.query.house && req.query.house !== 'null') {
       filters.house = req.query.house
     }
-    if (req.query.productCategory) {
+    if (req.query.productCategory && req.query.productCategory !== 'null') {
       filters.productCategory = req.query.productCategory
     }
 
     const products = await Product.findAll({
       where : filters
     })
+    console.log(filters);
     res.json(products)
   } catch (err) {
     next(err)

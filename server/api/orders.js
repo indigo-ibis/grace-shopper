@@ -66,12 +66,12 @@ router.post('/:orderId', async (req, res, next) => {
   }
 })
 
-router.get('cart/:userId', async (req, res, next) => {
+router.get('/cart/:userId', async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {
         userId: req.params.userId,
-        fullfillmentStatus: 'Delivered'
+        fullfillmentStatus: 'inCart'
       },
       include: [{model: LineItem}]
     })

@@ -101,26 +101,24 @@ const seed = async () => {
   try {
     await db.sync({force: true})
 
-    await Promise.all(
-      usersArr.map(el => {
-        return Users.create(el)
+    await Promise.all([
+      Users.bulkCreate(usersArr, {
+          validate : true,
+          individualHooks : true
       }),
-      await Promise.all(
-        productsArr.map(el => {
-          return Products.create(el)
-        })
-      ),
-      await Promise.all(
-        orderItemsArr.map(el => {
-          return OrderItems.create(el)
-        })
-      ),
-      await Promise.all(
-        ordersArr.map(el => {
-          return Orders.create(el)
-        })
-      )
-    )
+      Products.bulkCreate(productsArr, {
+        validate : true,
+        individualHooks : true
+      }),
+      OrderItems.bulkCreate(orderItemsArr, {
+        validate : true,
+        individualHooks : true
+      }),
+      Orders.bulkCreate(ordersArr, {
+        validate : true,
+        individualHooks : true
+      })
+    ])
     console.log(green('Seeding success!'))
     db.close()
   } catch (err) {

@@ -8,18 +8,25 @@ const Orders = db.define('orders', {
     validate: {
       notEmpty: true,
       isIn: [
-        ['Unfullfilled', 'Delivered', 'Cancelled', 'Refund Pending', 'Refunded']
+        [
+          'inCart',
+          'Unfullfilled',
+          'Delivered',
+          'Cancelled',
+          'Refund Pending',
+          'Refunded'
+        ]
       ]
     }
   },
   totalPrice: {
-    type: Sequelize.DECIMAL, //DECIMAL?
+    type: Sequelize.INTEGER,
     validate: {
       min: 0
     }
   },
   discountAmount: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER
   }
 })
 

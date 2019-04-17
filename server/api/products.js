@@ -6,16 +6,17 @@ router.get('/', async (req, res, next) => {
   try {
     const filters = {};
 
-    if (req.query.house) {
+    if (req.query.house && req.query.house !== 'null') {
       filters.house = req.query.house
     }
-    if (req.query.productCategory) {
+    if (req.query.productCategory && req.query.productCategory !== 'null') {
       filters.productCategory = req.query.productCategory
     }
 
     const products = await Product.findAll({
       where : filters
     })
+    console.log(filters);
     res.json(products)
   } catch (err) {
     next(err)
@@ -31,6 +32,21 @@ router.get('/:productId', async (req, res, next) => {
     else {
       res.json(product)
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create({
+      name : req.body.name,
+      price : req.body.price,
+      imageUrl : req.body.imageUrl,
+      house : req.body.house,
+      productCategory : req.body.productCategory
+    })
+    res.json(newProduct)
   } catch (err) {
     next(err)
   }

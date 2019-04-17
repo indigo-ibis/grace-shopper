@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {me, logout} from '../store'
-import {  } from '../store/filters'
+import {} from '../store/filters'
 /**
  * COMPONENT
  */
 class Navbar extends Component {
-
   componentDidMount() {
     this.props.loadInitialData()
   }
@@ -18,22 +17,24 @@ class Navbar extends Component {
 
     return (
       <div>
-        <img src='/GOTheader.jpg' />
+        <img src="/GOTheader.jpg" />
 
-        <nav>
-        </nav>
+        <nav />
 
         <hr />
         <div>
           {isLoggedIn ? (
             <div>
-              <a href="#" onClick={handleClick}> Logout </a>
+              <a href="#" onClick={this.props.handleClick}>
+                {' '}
+                Logout{' '}
+              </a>
             </div>
-          ):(
+          ) : (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
-          </div>
+            </div>
           )}
         </div>
       </div>
@@ -59,8 +60,7 @@ const mapDispatch = dispatch => {
     },
     handleClick() {
       dispatch(logout())
-    },
-
+    }
   }
 }
 

@@ -62,6 +62,24 @@ const ordersArr = [
     totalPrice: 400,
     discountAmount: 1,
     userId: 1
+  },
+  {
+    fullfillmentStatus: 'inCart',
+    totalPrice: 300,
+    discountAmount: 1,
+    userId: 1
+  },
+  {
+    fullfillmentStatus: 'inCart',
+    totalPrice: 500,
+    discountAmount: 1,
+    userId: 2
+  },
+  {
+    fullfillmentStatus: 'inCart',
+    totalPrice: 400,
+    discountAmount: 1,
+    userId: 1
   }
 ]
 

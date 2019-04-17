@@ -6,10 +6,10 @@ router.get('/', async (req, res, next) => {
   try {
     const filters = {};
 
-    if (req.query.house && req.query.house !== 'null') {
+    if (req.query.house) {
       filters.house = req.query.house
     }
-    if (req.query.productCategory && req.query.productCategory !== 'null') {
+    if (req.query.productCategory && req.query.productCategory !== 'all') {
       filters.productCategory = req.query.productCategory
     }
 

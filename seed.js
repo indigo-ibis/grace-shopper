@@ -3,7 +3,7 @@ const {green, red} = require('chalk')
 
 const Users = require('./server/db/models/user')
 const Products = require('./server/db/models/products')
-const OrderItems = require('./server/db/models/orderItems')
+const LineItems = require('./server/db/models/lineItem')
 const Orders = require('./server/db/models/orders')
 
 const productsArr = [
@@ -48,17 +48,20 @@ const ordersArr = [
   {
     fullfillmentStatus: 'Unfullfilled',
     totalPrice: 300,
-    discountAmount: 1
+    discountAmount: 1,
+    userId: 1
   },
   {
     fullfillmentStatus: 'Unfullfilled',
     totalPrice: 500,
-    discountAmount: 1
+    discountAmount: 1,
+    userId: 2
   },
   {
     fullfillmentStatus: 'Delivered',
     totalPrice: 400,
-    discountAmount: 1
+    discountAmount: 1,
+    userId: 1
   }
 ]
 
@@ -89,11 +92,12 @@ const usersArr = [
   }
 ]
 
-const orderItemsArr = [
+const lineItemsArr = [
   {
     quantity: 2,
     discountAmount: 0,
-    productId: 1
+    productId: 1,
+    orderId: 1
   }
 ]
 
@@ -101,24 +105,29 @@ const seed = async () => {
   try {
     await db.sync({force: true})
 
-    await Promise.all([
-      Users.bulkCreate(usersArr, {
-          validate : true,
-          individualHooks : true
-      }),
-      Products.bulkCreate(productsArr, {
-        validate : true,
-        individualHooks : true
-      }),
-      OrderItems.bulkCreate(orderItemsArr, {
-        validate : true,
-        individualHooks : true
-      }),
-      Orders.bulkCreate(ordersArr, {
-        validate : true,
-        individualHooks : true
+    await Promise.all(
+      usersArr.map(el => {
+        return Users.create(el)
       })
-    ])
+    )
+
+    await Promise.all(
+      productsArr.map(el => {
+        return Products.create(el)
+      })
+    )
+
+    await Promise.all(
+      ordersArr.map(el => {
+        return Orders.create(el)
+      })
+    )
+    await Promise.all(
+      lineItemsArr.map(el => {
+        return LineItems.create(el)
+      })
+    )
+
     console.log(green('Seeding success!'))
     db.close()
   } catch (err) {

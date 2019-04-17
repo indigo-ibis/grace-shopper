@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, OrderItem} = require('../db/models')
+const {Order, LineItem} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,8 +13,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/allitems', async (req, res, next) => {
   try {
-    const orderItems = await OrderItem.findAll();
-    res.json(orderItems)
+    const lineItems = await LineItem.findAll();
+    res.json(lineItems)
   } catch (err) {
     next(err)
   }
@@ -36,7 +36,7 @@ router.get('/user/:userId', async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId, {
-      include: [{model: OrderItem}]
+      include: [{model: LineItem}]
     })
     if (!order) {
       res.sendStatus(404)
@@ -65,12 +65,12 @@ router.post('/', async (req, res, next) => {
 // adding a new ORDER ITEM to an order
 router.post('/:orderId', async (req, res, next) => {
   try {
-    const newOrderItem = await OrderItem.create({
+    const newLineItem = await LineItem.create({
       orderId: req.params.orderId,
       productId: req.body.productId,
       quantity: req.body.quantity
     })
-    res.json(newOrderItem)
+    res.json(newLineItem)
   } catch (err) {
     next(err)
   }

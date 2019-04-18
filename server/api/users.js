@@ -18,21 +18,23 @@ router.get('/', async (req, res, next) => {
 
 router.get('/cart', async (req, res, next) => {
   try {
-    console.log('in cart route')
     const order = await Order.findAll({
       where: {
         userId: +req.session.passport.user,
         fullfillmentStatus: 'inCart'
       },
-      include: [{model: LineItem}]
+      include: [
+        {
+          model: LineItem,
+          include: [{model: Product}]
+        }
+      ]
     })
-    const productInfo = await Promise.all(
-      order[0].lineItems.map(item => Product.findByPk(item.productId))
-    )
+
     if (!order) {
       res.sendStatus(404)
     } else {
-      res.json({order, productInfo})
+      res.json(order)
     }
   } catch (err) {
     next(err)

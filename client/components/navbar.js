@@ -19,12 +19,11 @@ class Navbar extends Component {
         <NavLink to="/">
           <img src="/GOTheader.jpg" />
         </NavLink>
-        {/* <Router>
-          <nav>
-            <button onClick={() => {setFilter('Stark')}} to='/products/stark'> Stark </button>
-            <button onClick={() => {setFilter('Stark')}} to='/products/'> Stark </button>
-          </nav>
-        </Router> */}
+
+        <div>
+          <Link to="/products"> All Products </Link>
+        </div>
+
         <hr />
         <div>
           {isLoggedIn ? (
@@ -41,6 +40,17 @@ class Navbar extends Component {
             </div>
           )}
         </div>
+
+        <div>
+          <Link to="/products?house=stark"> Stark </Link>
+          <Link to="/products?house=targaryan"> Targaryan </Link>
+          <Link to="/products?house=lannister"> Lannister </Link>
+          <Link to="/products?house=tyrell"> Tyrell </Link>
+          <Link to="/products?house=baratheon"> Baratheon </Link>
+          <Link to="/products?house=greyjoy"> Greyjoy </Link>
+          <Link to="/products?house=tully"> Tully </Link>
+        </div>
+
       </div>
     )
   }

@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {me, logout} from '../store'
-import {} from '../store/filters'
+import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom'
+import {me, logout, setFilter} from '../store'
 /**
  * COMPONENT
  */
@@ -17,10 +16,15 @@ class Navbar extends Component {
 
     return (
       <div>
-        <img src="/GOTheader.jpg" />
-
-        <nav />
-
+        <NavLink to="/">
+          <img src="/GOTheader.jpg" />
+        </NavLink>
+        {/* <Router>
+          <nav>
+            <button onClick={() => {setFilter('Stark')}} to='/products/stark'> Stark </button>
+            <button onClick={() => {setFilter('Stark')}} to='/products/'> Stark </button>
+          </nav>
+        </Router> */}
         <hr />
         <div>
           {isLoggedIn ? (
@@ -60,6 +64,9 @@ const mapDispatch = dispatch => {
     },
     handleClick() {
       dispatch(logout())
+    },
+    setFilter() {
+      dispatch(setFilter())
     }
   }
 }

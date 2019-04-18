@@ -19,7 +19,7 @@ const selectedProduct = {
 /**
  * ACTION CREATORS
  */
-const setFilter = (house, category) => {
+export const setFilter = (house, category) => {
   return {
     type: SET_FILTER,
     house,
@@ -38,10 +38,13 @@ const getProduct = (products) => {
  * THUNK CREATORS
  */
 
-export const loadSelectedProducts = function(house, cate){
+export const loadSelectedProducts = function(house=null, cate=null){
   return async (dispatch) => {
     try {
-      let res = await axios.get(`/api/products?house=${house}&productCategory=${cate}`)
+      let queries = '?';
+      if (house) { queries += `house=${house}` }
+      if (cate) { queries += (house ? '&' : '') + `productCategory=${cate}` }
+      const res = await axios.get(`/api/products${queries}`)
       dispatch(getProduct(res.data))
     } catch (error){
       console.error(error)

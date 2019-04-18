@@ -83,11 +83,10 @@ router.post('/', async (req, res, next) => {
 //CART FUNCTIONALITY
 //********************************* */
 
-//GET ALL ORDERS
 //ORDER HISTORY
+//GET ALL ORDERS
 router.get('/orderhistory', async (req, res, next) => {
   try {
-    // console.log(req.session.passport.user)
     const order = await Order.findAll({
       where: {
         userId: +req.session.passport.user
@@ -98,6 +97,23 @@ router.get('/orderhistory', async (req, res, next) => {
       res.sendStatus(404)
     } else {
       res.json(order)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId)
+    if (!user) {
+      res.sendStatus(404)
+    } else {
+      await user
+        .update({
+          isBanned: true
+        })
+        .then(() => res.json(user))
     }
   } catch (err) {
     next(err)

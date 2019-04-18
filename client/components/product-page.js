@@ -18,6 +18,12 @@ class ProductPage extends React.Component {
     )
   }
 
+  componentDidUpdate(prevState) {
+    if (prevState.match.params.productId !== this.props.match.params.productId) {
+      this.props.loadProduct(this.props.match.params.productId);
+    }
+  }
+
   render() {
     if (!this.state.loaded) {
       return <h1>Loading...</h1>

@@ -38,6 +38,11 @@ class Navbar extends Component {
           )}
         </div>
 
+        <div>
+            <NavLink to='/products/stark'></NavLink>
+            <NavLink to='/products/targaryan'></NavLink>
+        </div>
+
       </div>
     )
   }

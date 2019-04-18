@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {loadSelectedProducts} from './../store'
+import {loadSelectedProducts} from '../store'
+import {SingleProductDisplay} from '.'
 import queryString from 'query-string'
 
 class productsDisplay extends React.Component {
@@ -32,7 +33,7 @@ class productsDisplay extends React.Component {
     return (
       <div>
         {this.props.products.map(product => (
-          <h1 key={product.id}>{product.name}</h1>
+          <SingleProductDisplay key={product.id} {...product} />
         ))}
       </div>
     )
@@ -42,7 +43,6 @@ class productsDisplay extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    filters: state.filters
   }
 }
 

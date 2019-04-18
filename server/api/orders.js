@@ -4,16 +4,17 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll()
     res.json(orders)
   } catch (err) {
     next(err)
   }
 })
 
+//Find all items
 router.get('/allitems', async (req, res, next) => {
   try {
-    const lineItems = await LineItem.findAll();
+    const lineItems = await LineItem.findAll()
     res.json(lineItems)
   } catch (err) {
     next(err)
@@ -41,7 +42,7 @@ router.post('/', async (req, res, next) => {
     const newOrder = await Order.create({
       // checks if there was a userId sent (meaning they're logged in), otherwise null
       userId: req.body.userId || null,
-      fullfillmentStatus : 'Unfullfilled'
+      fullfillmentStatus: 'Unfullfilled'
     })
     res.json(newOrder)
   } catch (err) {
@@ -56,8 +57,7 @@ router.put('/:orderId', async (req, res, next) => {
     if (!order) {
       res.sendStatus(404)
     } else {
-      await order.update({userId : req.body.userId})
-      .then(res.json(order))
+      await order.update({userId: req.body.userId}).then(res.json(order))
     }
   } catch (err) {
     next(err)
@@ -69,10 +69,9 @@ router.get('/:orderId/clear', async (req, res, next) => {
   try {
     await LineItem.destroy({
       where: {
-        orderId : req.params.orderId
+        orderId: req.params.orderId
       }
-    })
-    .then(() => res.sendStatus(200))
+    }).then(() => res.sendStatus(200))
   } catch (err) {
     next(err)
   }

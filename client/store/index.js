@@ -1,16 +1,19 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-import { createLogger } from 'redux-logger'
+import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import userReducer from './user'
 import allProductsReducer from './all-products'
 import selectedProductReducer from './single-product'
+import ordersReducer from './orders'
 
 const reducer = combineReducers({
   user: userReducer,
   products: allProductsReducer,
-  selectedProduct: selectedProductReducer
+  selectedProduct: selectedProductReducer,
+  orders: ordersReducer
 })
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

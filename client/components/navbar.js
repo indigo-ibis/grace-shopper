@@ -7,7 +7,6 @@ import {me, logout, setFilter} from '../store'
  * COMPONENT
  */
 class Navbar extends Component {
-
   componentDidMount() {
     this.props.loadInitialData()
   }
@@ -17,7 +16,9 @@ class Navbar extends Component {
 
     return (
       <div>
-        <NavLink to='/'><img src='/GOTheader.jpg' /></NavLink>
+        <NavLink to="/">
+          <img src="/GOTheader.jpg" />
+        </NavLink>
         {/* <Router>
           <nav>
             <button onClick={() => {setFilter('Stark')}} to='/products/stark'> Stark </button>
@@ -28,21 +29,18 @@ class Navbar extends Component {
         <div>
           {isLoggedIn ? (
             <div>
-              <a href="#" onClick={this.props.handleClick}> Logout </a>
+              <a href="#" onClick={this.props.handleClick}>
+                {' '}
+                Logout{' '}
+              </a>
             </div>
-          ):(
+          ) : (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
-          </div>
+            </div>
           )}
         </div>
-
-        <div>
-            <NavLink to='/products/stark'></NavLink>
-            <NavLink to='/products/targaryan'></NavLink>
-        </div>
-
       </div>
     )
   }

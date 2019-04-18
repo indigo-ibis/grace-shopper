@@ -12,11 +12,7 @@ class productsDisplay extends React.Component {
     }
 
     async componentDidMount() {
-<<<<<<< HEAD
-        const houseName = this.props.match.params.house
-        await this.props.loadSelectedProducts(houseName[0].toUpperCase() + houseName.slice(1).toLowerCase() || null)
-=======
-        let houseName = productCategoryName = null;
+        let houseName, productCategoryName = null;
         if (this.props.match.params.house) {
             houseName = this.props.match.params.house[0].toUpperCase() + this.props.match.params.house.slice(1).toLowerCase()
         }
@@ -24,7 +20,6 @@ class productsDisplay extends React.Component {
             productCategoryName = this.props.match.params.category
         }
         await this.props.loadSelectedProducts()
->>>>>>> master
         .then( this.setState({
             loaded : true
         }) )

@@ -22,11 +22,13 @@ class ProductPage extends React.Component {
     if (!this.state.loaded) {
       return <h1>Loading...</h1>
     }
+
+    const product = this.props.product
     return (
       <div>
-        <img src={this.props.product.imageUrl}></img>
-        <h1>{this.props.product.name}</h1>
-        {this.props.product.price}
+        <img src={product.imageUrl}></img>
+        <h1>{product.name}</h1>
+        {(product.price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
       </div>
     )
   }

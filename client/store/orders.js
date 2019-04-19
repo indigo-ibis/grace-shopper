@@ -3,6 +3,7 @@ import Axios from 'axios'
 const GET_CART = 'GET_CART'
 const REMOVE_CARTITEM = 'REMOVE_CARTITEM'
 const ADD_ITEM = 'ADD_ITEM'
+const UPDATE_CARTITEM = 'UPDATE_CARTITEM'
 
 const initialState = {
   cartArr: []
@@ -21,6 +22,12 @@ export const addItem = payload => ({
 export const deleteCartItem = payload => ({
   type: REMOVE_CARTITEM,
   payload
+})
+
+export const updateCartItem = (quantity, id) => ({
+  type: UPDATE_CARTITEM,
+  quantity,
+  id
 })
 
 export const getCartThunk = () => {
@@ -53,6 +60,13 @@ export const deleteCartItemThunk = itemId => {
   }
 }
 
+export const updateCartItemThunk = (quantity, id) => {
+  return async dispatch => {
+    await Axios.put(`/api/orders/cart/`, {quantity, id})
+    dispatch(updateCartItem(quantity, id))
+  }
+}
+
 const ordersReducer = function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
@@ -68,6 +82,16 @@ const ordersReducer = function(state = initialState, action) {
       let newCart = {...newCartArr[0]}
       newCart.lineItems = newCart.lineItems.filter(item => item.id !== id)
       console.log(newCart)
+      return {
+        ...state,
+        cartArr: [newCart]
+      }
+    case UPDATE_CARTITEM:
+      id = +action.id
+      let quantity = action.quantity
+      newCartArr = [...state.cartArr]
+      newCart = {...newCartArr[0]}
+      newCart.lineItems.find(item => item.id === id).quantity = quantity
       return {
         ...state,
         cartArr: [newCart]

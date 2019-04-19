@@ -20,7 +20,7 @@ router.get('/cart', async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {
-        userId: +req.session.passport.user,
+        userId: req.session.passport ? +req.session.passport.user : 0,
         fullfillmentStatus: 'inCart'
       },
       include: [
@@ -30,7 +30,6 @@ router.get('/cart', async (req, res, next) => {
         }
       ]
     })
-
     if (!order) {
       res.sendStatus(404)
     } else {

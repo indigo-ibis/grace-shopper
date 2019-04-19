@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const GET_PRODUCTS = 'GET_PRODUCTS'
+
 const getProducts = (products) => {
   return {
     type: GET_PRODUCTS,

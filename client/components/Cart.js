@@ -20,6 +20,7 @@ export class Cart extends Component {
     let lineItems
     if (this.props.userCart[0]) {
       lineItems = this.props.userCart[0].lineItems
+      console.log(lineItems)
     }
     return this.state.isErr ? (
       <h1>Uh oh...</h1>

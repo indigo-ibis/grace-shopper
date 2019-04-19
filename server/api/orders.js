@@ -15,6 +15,7 @@ router.get('/', async (req, res, next) => {
 router.get('/allitems', async (req, res, next) => {
   try {
     const lineItems = await LineItem.findAll()
+    console.log(lineItems)
     res.json(lineItems)
   } catch (err) {
     next(err)
@@ -59,8 +60,8 @@ router.post('/', async (req, res, next) => {
   try {
     const newOrder = await Order.create({
       // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: req.body.userId || null,
-      fullfillmentStatus: 'Unfullfilled'
+      userId: +req.session.passport.user || null,
+      fullfillmentStatus: 'inCart'
     })
     res.json(newOrder)
   } catch (err) {
@@ -95,9 +96,14 @@ router.get('/:orderId/clear', async (req, res, next) => {
   }
 })
 
-// adding a new line item to an order
+// ADD TO CART: adding a new line item to an order, for a USER
 router.post('/:orderId', async (req, res, next) => {
   try {
+    let test = await Order.findByPk(req.params.orderId)
+    if (!test) {
+      Order.create({id: req.params.orderId})
+      
+    }
     const newLineItem = await LineItem.create({
       orderId: req.params.orderId,
       productId: req.body.productId,
@@ -114,6 +120,7 @@ router.delete('/lineItem/:lineItemId', async (req, res, next) => {
   try {
     const lineItem = await LineItem.findByPk(req.params.lineItemId)
     await lineItem.destroy()
+    console.log(lineItem)
     res.sendStatus(200)
   } catch (err) {
     next(err)

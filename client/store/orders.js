@@ -26,22 +26,12 @@ export const deleteCartItem = payload => ({
   payload
 })
 
-<<<<<<< HEAD
-export const updateQuantity = payload => ({
-  type: UPDATE_QUANTITY,
-  payload
-})
-
-
-//thunks
-=======
 export const updateCartItem = (quantity, id) => ({
   type: UPDATE_CARTITEM,
   quantity,
   id
 })
 
->>>>>>> master
 export const getCartThunk = () => {
   return async dispatch => {
     const {data} = await Axios.get(`/api/users/cart`)
@@ -56,16 +46,6 @@ export const deleteCartItemThunk = itemId => {
   }
 }
 
-<<<<<<< HEAD
-export const updateQuantityThunk = (itemId, val) => {
-  return async dispatch => {
-    const {data} = await Axios.put(`/api/users/cart/` + itemId, )
-    dispatch(updateQuantity(data))
-  }
-}
-
-//reducer
-=======
 export const updateCartItemThunk = (quantity, id) => {
   return async dispatch => {
     await Axios.put(`/api/orders/cart/`, {quantity, id})
@@ -73,7 +53,6 @@ export const updateCartItemThunk = (quantity, id) => {
   }
 }
 
->>>>>>> master
 const ordersReducer = function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
@@ -93,12 +72,6 @@ const ordersReducer = function(state = initialState, action) {
         ...state,
         cartArr: [newCart]
       }
-<<<<<<< HEAD
-
-    case UPDATE_QUANTITY:
-
-
-=======
     case UPDATE_CARTITEM:
       id = +action.id
       let quantity = action.quantity
@@ -109,7 +82,6 @@ const ordersReducer = function(state = initialState, action) {
         ...state,
         cartArr: [newCart]
       }
->>>>>>> master
     default:
       return state
   }

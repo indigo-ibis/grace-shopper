@@ -32,9 +32,12 @@ class ProductPage extends React.Component {
     const product = this.props.product
     return (
       <div>
-        <img src={product.imageUrl}></img>
-        <h1>{product.name}</h1>
-        {(product.price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+        <div>
+          <img src={product.imageUrl}></img>
+          <h1>{product.name}</h1>
+          {(product.price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+        </div>
+
       </div>
     )
   }

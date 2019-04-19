@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import {loadSelectedProducts} from '../store'
 import {SingleProductDisplay} from '.'
 import queryString from 'query-string'
@@ -12,18 +13,42 @@ class productsDisplay extends React.Component {
     }
   }
 
-  async componentDidMount() {
+  getQueries() {
     const queries = queryString.parse(this.props.location.search)
     const productCategoryName = queries.category || null
-    let houseName = null;
-    if (queries.house) {
-      houseName = queries.house[0].toUpperCase() + queries.house.slice(1).toLowerCase()
+    const houseName = queries.house
+      ? queries.house[0].toUpperCase() + queries.house.slice(1).toLowerCase()
+      : null
+    return {houseName, productCategoryName}
+  }
+
+  async reload() {
+    this.setState({loaded: false})
+    this.queries = this.getQueries()
+    await this.props
+      .loadSelectedProducts(
+        this.queries.houseName,
+        this.queries.productCategoryName
+      )
+      .then(() =>
+        this.setState({
+          loaded: true
+        })
+      )
+  }
+
+  componentDidMount() {
+    this.reload()
+  }
+
+  componentDidUpdate() {
+    const {houseName, productCategoryName} = this.getQueries()
+    if (
+      this.queries.houseName !== houseName ||
+      this.queries.productCategoryName !== productCategoryName
+    ) {
+      this.reload()
     }
-    await this.props.loadSelectedProducts(houseName, productCategoryName).then(
-      this.setState({
-        loaded: true
-      })
-    )
   }
 
   render() {
@@ -32,9 +57,21 @@ class productsDisplay extends React.Component {
     }
     return (
       <div>
-        {this.props.products.map(product => (
-          <SingleProductDisplay key={product.id} {...product} />
-        ))}
+        <div>
+          <Link to="/products?house=stark"> Stark </Link>
+          <Link to="/products?house=targaryan"> Targaryan </Link>
+          <Link to="/products?house=lannister"> Lannister </Link>
+          <Link to="/products?house=tyrell"> Tyrell </Link>
+          <Link to="/products?house=baratheon"> Baratheon </Link>
+          <Link to="/products?house=greyjoy"> Greyjoy </Link>
+          <Link to="/products?house=tully"> Tully </Link>
+        </div>
+
+        <div>
+          {this.props.products.map(product => (
+            <SingleProductDisplay key={product.id} {...product} />
+          ))}
+        </div>
       </div>
     )
   }
@@ -42,7 +79,7 @@ class productsDisplay extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
+    products: state.products
   }
 }
 

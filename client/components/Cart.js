@@ -10,6 +10,7 @@ export class Cart extends Component {
     let lineItems
     if (this.props.userCart[0]) {
       lineItems = this.props.userCart[0].lineItems
+      console.log(lineItems)
     }
 
     return (
@@ -20,13 +21,16 @@ export class Cart extends Component {
             lineItems.map(elem => {
               return (
                 <React.Fragment key={elem.id}>
-                  <li>{elem.product.name}</li>
-                  <button
-                    type="button"
-                    onClick={() => this.props.deleteCart(elem.id)}
-                  >
-                    x
-                  </button>
+                  <div className="card">
+                    <img className="preview" src={elem.product.imageUrl} />
+                    {elem.product.name}
+                    <button
+                      type="button"
+                      onClick={() => this.props.deleteCart(elem.id)}
+                    >
+                      x
+                    </button>
+                  </div>
                 </React.Fragment>
               )
             })}

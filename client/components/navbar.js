@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom'
-import {me, logout, setFilter} from '../store'
+import {me, logout} from '../store'
 /**
  * COMPONENT
  */
@@ -50,7 +50,6 @@ class Navbar extends Component {
           <Link to="/products?house=greyjoy"> Greyjoy </Link>
           <Link to="/products?house=tully"> Tully </Link>
         </div>
-
       </div>
     )
   }

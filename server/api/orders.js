@@ -22,9 +22,8 @@ router.get('/allitems', async (req, res, next) => {
 })
 
 router.put('/cart', async (req, res, next) => {
-  console.log(req.body)
   try {
-    const lineItem = await LineItem.update(
+    await LineItem.update(
       {quantity: +req.body.quantity},
       {
         where: {
@@ -33,7 +32,8 @@ router.put('/cart', async (req, res, next) => {
         returning: true
       }
     )
-    res.json(lineItem[1])
+    // res.json(lineItem[1])
+    res.sendStatus(201)
   } catch (err) {
     next(err)
   }

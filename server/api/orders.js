@@ -24,7 +24,7 @@ router.get('/allitems', async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId, {
-      include: [{model: LineItem}]
+      include: [{model: LineItem, order:[['createdAt', 'asc']]}]
     })
     if (!order) {
       res.sendStatus(404)

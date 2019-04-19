@@ -73,9 +73,6 @@ const mapDispatch = dispatch => {
     },
     handleClick() {
       dispatch(logout())
-    },
-    setFilter() {
-      dispatch(setFilter())
     }
   }
 }

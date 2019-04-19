@@ -16,10 +16,12 @@ export class Cart extends Component {
   componentDidMount() {
     this.props.getCart()
   }
+
   render() {
     let lineItems
     if (this.props.userCart[0]) {
       lineItems = this.props.userCart[0].lineItems
+      console.log(lineItems)
     }
     console.log(this.props)
     return this.state.isErr ? (
@@ -33,12 +35,11 @@ export class Cart extends Component {
               return (
                 <React.Fragment key={elem.id}>
                   <li>{elem.product.name}</li>
-                  <li>Quant:{elem.quantity}</li>
+                  <li>Quantity:{elem.quantity}</li>
                   <li>ID: {elem.id}</li>
                   <button
                     type="button"
-                    onClick={() => this.props.deleteCart(elem.id)}
-                  >
+                    onClick={() => this.props.deleteCart(elem.id)}>
                     x
                   </button>
                   <select
@@ -53,12 +54,17 @@ export class Cart extends Component {
                       // .catch(err => {
                       //   this.setState({isErr: true})
                       // })
-                    }
-                  >
+                    }>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
                   </select>
                 </React.Fragment>
               )

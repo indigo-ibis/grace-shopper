@@ -50,7 +50,6 @@ class Navbar extends Component {
           <Link to="/products?house=greyjoy"> Greyjoy </Link>
           <Link to="/products?house=tully"> Tully </Link>
         </div>
-
       </div>
     )
   }

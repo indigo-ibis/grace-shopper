@@ -21,6 +21,24 @@ router.get('/allitems', async (req, res, next) => {
   }
 })
 
+router.put('/cart', async (req, res, next) => {
+  console.log(req.body)
+  try {
+    const lineItem = await LineItem.update(
+      {quantity: +req.body.quantity},
+      {
+        where: {
+          id: +req.body.id
+        },
+        returning: true
+      }
+    )
+    res.json(lineItem[1])
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId, {

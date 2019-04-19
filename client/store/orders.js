@@ -2,6 +2,8 @@ import Axios from 'axios'
 
 const GET_CART = 'GET_CART'
 const REMOVE_CARTITEM = 'REMOVE_CARTITEM'
+const UPDATE_CARTITEM = 'UPDATE_CARTITEM'
+
 const initialState = {
   cartArr: []
 }
@@ -29,6 +31,13 @@ export const deleteCartItemThunk = itemId => {
     dispatch(deleteCartItem(itemId))
   }
 }
+
+// export const updateCartItemThunk = itemId => {
+//   return async dispatch => {
+//     await Axios.put(`/api/orders/cart/${itemId}`)
+//     dispatch(deleteCartItem(itemId))
+//   }
+// }
 
 const ordersReducer = function(state = initialState, action) {
   switch (action.type) {

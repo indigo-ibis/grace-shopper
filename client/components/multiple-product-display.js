@@ -12,18 +12,42 @@ class productsDisplay extends React.Component {
     }
   }
 
-  async componentDidMount() {
+  getQueries() {
     const queries = queryString.parse(this.props.location.search)
     const productCategoryName = queries.category || null
-    let houseName = null;
-    if (queries.house) {
-      houseName = queries.house[0].toUpperCase() + queries.house.slice(1).toLowerCase()
+    const houseName = queries.house
+      ? queries.house[0].toUpperCase() + queries.house.slice(1).toLowerCase()
+      : null
+    return {houseName, productCategoryName}
+  }
+
+  async reload() {
+    this.setState({loaded: false})
+    this.queries = this.getQueries()
+    await this.props
+      .loadSelectedProducts(
+        this.queries.houseName,
+        this.queries.productCategoryName
+      )
+      .then(() =>
+        this.setState({
+          loaded: true
+        })
+      )
+  }
+
+  componentDidMount() {
+    this.reload()
+  }
+
+  componentDidUpdate() {
+    const {houseName, productCategoryName} = this.getQueries()
+    if (
+      this.queries.houseName !== houseName ||
+      this.queries.productCategoryName !== productCategoryName
+    ) {
+      this.reload()
     }
-    await this.props.loadSelectedProducts(houseName, productCategoryName).then(
-      this.setState({
-        loaded: true
-      })
-    )
   }
 
   render() {
@@ -42,7 +66,7 @@ class productsDisplay extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
+    products: state.products
   }
 }
 

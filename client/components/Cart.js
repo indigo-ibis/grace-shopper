@@ -5,6 +5,7 @@ import {
   deleteCartItemThunk,
   updateCartItemThunk
 } from '../store/orders'
+import {Link} from 'react-router-dom'
 
 // import axios from 'axios'
 
@@ -20,6 +21,7 @@ export class Cart extends Component {
     if (this.props.userCart[0]) {
       lineItems = this.props.userCart[0].lineItems
     }
+    console.log(this.props)
     return this.state.isErr ? (
       <h1>Uh oh...</h1>
     ) : (
@@ -62,6 +64,7 @@ export class Cart extends Component {
               )
             })}
         </h2>
+        <Link to="/checkout">CheckOut</Link>
       </div>
     )
   }

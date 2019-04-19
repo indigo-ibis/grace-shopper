@@ -15,6 +15,7 @@ export class Cart extends Component {
   componentDidMount() {
     this.props.getCart()
   }
+
   render() {
     let lineItems
     if (this.props.userCart[0]) {
@@ -31,39 +32,38 @@ export class Cart extends Component {
             lineItems.map(elem => {
               return (
                 <React.Fragment key={elem.id}>
-                  <div className="card">
-                    <li>
-                      <img className="preview" src={elem.product.imageUrl} />
-                    </li>
-                    <li>{elem.product.name}</li>
-                    <li>Quant:{elem.quantity}</li>
-                    <li>ID: {elem.id}</li>
-                    <button
-                      type="button"
-                      onClick={() => this.props.deleteCart(elem.id)}
-                    >
-                      x
-                    </button>
-                    <select
-                      defaultValue={elem.quantity}
-                      onChange={
-                        evt => this.props.updateCart(evt.target.value, elem.id)
-                        // axios
-                        //   .put('/api/orders/cart', {
-                        //     quantity: evt.target.value,
-                        //     id: elem.id
-                        //   })
-                        // .catch(err => {
-                        //   this.setState({isErr: true})
-                        // })
-                      }
-                    >
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                    </select>
-                  </div>
+                  <li>{elem.product.name}</li>
+                  <li>Quantity:{elem.quantity}</li>
+                  <li>ID: {elem.id}</li>
+                  <button
+                    type="button"
+                    onClick={() => this.props.deleteCart(elem.id)}>
+                    x
+                  </button>
+                  <select
+                    defaultValue={elem.quantity}
+                    onChange={
+                      evt => this.props.updateCart(evt.target.value, elem.id)
+                      // axios
+                      //   .put('/api/orders/cart', {
+                      //     quantity: evt.target.value,
+                      //     id: elem.id
+                      //   })
+                      // .catch(err => {
+                      //   this.setState({isErr: true})
+                      // })
+                    }>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+                  </select>
                 </React.Fragment>
               )
             })}

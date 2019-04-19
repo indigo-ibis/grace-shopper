@@ -1,5 +1,6 @@
 import Axios from 'axios'
 
+//action creators
 const GET_CART = 'GET_CART'
 const REMOVE_CARTITEM = 'REMOVE_CARTITEM'
 const ADD_ITEM = 'ADD_ITEM'
@@ -9,6 +10,7 @@ const initialState = {
   cartArr: []
 }
 
+//functions
 export const getCart = payload => ({
   type: GET_CART,
   payload

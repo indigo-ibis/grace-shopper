@@ -3,14 +3,8 @@ import Axios from 'axios'
 //action creators
 const GET_CART = 'GET_CART'
 const REMOVE_CARTITEM = 'REMOVE_CARTITEM'
-<<<<<<< HEAD
-const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
-
-//state
-=======
 const UPDATE_CARTITEM = 'UPDATE_CARTITEM'
 
->>>>>>> master
 const initialState = {
   cartArr: []
 }

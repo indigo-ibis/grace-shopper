@@ -1,11 +1,16 @@
 import Axios from 'axios'
 
+//action creators
 const GET_CART = 'GET_CART'
 const REMOVE_CARTITEM = 'REMOVE_CARTITEM'
+const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
+
+//state
 const initialState = {
   cartArr: []
 }
 
+//functions
 export const getCart = payload => ({
   type: GET_CART,
   payload
@@ -16,6 +21,13 @@ export const deleteCartItem = payload => ({
   payload
 })
 
+export const updateQuantity = payload => ({
+  type: UPDATE_QUANTITY,
+  payload
+})
+
+
+//thunks
 export const getCartThunk = () => {
   return async dispatch => {
     const {data} = await Axios.get(`/api/users/cart`)
@@ -30,6 +42,14 @@ export const deleteCartItemThunk = itemId => {
   }
 }
 
+export const updateQuantityThunk = (itemId, val) => {
+  return async dispatch => {
+    const {data} = await Axios.put(`/api/users/cart/` + itemId, )
+    dispatch(updateQuantity(data))
+  }
+}
+
+//reducer
 const ordersReducer = function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
@@ -49,6 +69,10 @@ const ordersReducer = function(state = initialState, action) {
         ...state,
         cartArr: [newCart]
       }
+
+    case UPDATE_QUANTITY:
+
+
     default:
       return state
   }

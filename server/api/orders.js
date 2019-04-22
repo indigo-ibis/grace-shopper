@@ -27,7 +27,7 @@ router.get('/mycart', async (req, res, next) => {
   if (!req.session.cartId) {
     const newOrder = await Order.create({
       // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: +req.session.passport.user || null,
+      userId: (req.session.passport ? req.user.id : null),
       fullfillmentStatus: 'inCart'
     })
     req.session.cartId = newOrder.id
@@ -51,10 +51,7 @@ router.put('/mycart', async (req, res, next) => {
     const lineItem = await LineItem.findByPk(req.body.id, {
       include: [{model: Order, include: [{model: User}]}]
     })
-    if (
-      lineItem.order.user.id === null ||
-      lineItem.order.user.id === req.user.id
-    ) {
+    if ( !lineItem.order.user || lineItem.order.user.id === req.user.id ) {
       await lineItem
         .update({quantity: req.body.quantity})
         .then(() => res.sendStatus(201))

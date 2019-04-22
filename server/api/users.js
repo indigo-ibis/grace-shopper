@@ -18,22 +18,24 @@ router.get('/', async (req, res, next) => {
 
 router.get('/cart', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
-      where: {
-        userId: req.session.passport ? +req.session.passport.user : 0,
-        fullfillmentStatus: 'inCart'
-      },
-      include: [
-        {
-          model: LineItem,
-          include: [{model: Product}]
-        }
-      ]
-    })
-    if (!order) {
-      res.sendStatus(404)
-    } else {
-      res.json(order)
+    if (req.user) {
+      const order = await Order.findAll({
+        where: {
+          userId: req.user.id,
+          fullfillmentStatus: 'inCart'
+        },
+        include: [
+          {
+            model: LineItem,
+            include: [{model: Product}]
+          }
+        ]
+      })
+      if (!order) {
+        res.sendStatus(404)
+      } else {
+        res.json(order)
+      }
     }
   } catch (err) {
     next(err)

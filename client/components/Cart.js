@@ -21,9 +21,10 @@ export class Cart extends Component {
     let lineItems
     if (this.props.userCart[0]) {
       lineItems = this.props.userCart[0].lineItems
-      console.log(lineItems)
     }
-    console.log(this.props)
+    if (!localStorage.getItem('Cart')) {
+      localStorage.setItem('Cart', 'for guest')
+    }
     return this.state.isErr ? (
       <h1>Uh oh...</h1>
     ) : (
@@ -39,22 +40,18 @@ export class Cart extends Component {
                   <li>ID: {elem.id}</li>
                   <button
                     type="button"
-                    onClick={() => this.props.deleteCart(elem.id)}>
+                    onClick={() => this.props.deleteCart(elem.id)}
+                  >
                     x
                   </button>
                   <select
                     defaultValue={elem.quantity}
-                    onChange={
-                      evt => this.props.updateCart(evt.target.value, elem.id)
-                      // axios
-                      //   .put('/api/orders/cart', {
-                      //     quantity: evt.target.value,
-                      //     id: elem.id
-                      //   })
-                      // .catch(err => {
-                      //   this.setState({isErr: true})
-                      // })
-                    }>
+                    onChange={evt =>
+                      this.props
+                        .updateCart(evt.target.value, elem.id)
+                        .catch(err => this.setState({isErr: true}))
+                    }
+                  >
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
@@ -70,7 +67,7 @@ export class Cart extends Component {
               )
             })}
         </h2>
-        <Link to="/checkout">CheckOut</Link>
+        <Link to="/checkout">Proceed to CheckOut</Link>
       </div>
     )
   }

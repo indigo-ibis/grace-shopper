@@ -10,35 +10,39 @@ const productsArr = [
   {
     name: 'John Snow Figurine',
     price: 34,
-    imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
+    imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaiQj3VJobaGOSZY0VXZYDEK4kzTqtcxvnfU-QSOB2xKA2SPKX',
     house: 'Stark',
     productCategory: 'figurine'
   },
   {
     name: 'Needle Replica',
     price: 154,
-    imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/51e9ZsVDiLL._SX425_.jpg',
     house: 'Stark',
     productCategory: 'replica'
   },
   {
     name: 'Podrick Figurine',
     price: 34,
-    imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
+    imageUrl: 'https://farm1.staticflickr.com/461/18499855211_3e1c3a8f34_b.jpg',
     house: 'Tyrell',
     productCategory: 'figurine'
   },
   {
     name: 'Danaerys Stormborn first of her name, plush pillow',
     price: 24,
-    imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
+    imageUrl:
+      'https://i.pinimg.com/originals/70/df/c3/70dfc3885169a3700fc21702f1d934df.jpg',
     house: 'Targaryan',
     productCategory: 'memoribilia'
   },
   {
     name: 'Life Size Iron Throne Replica',
     price: 3299,
-    imageUrl: 'https://i.redd.it/dk04q9buhkqy.png',
+    imageUrl:
+      'https://www.nydailynews.com/resizer/95Phg7t-CYpYCtvig_M9Ithy2Mg=/800x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/D3V5DH4ZRZDHLAZNQ66CNA5RFQ.JPG',
     house: 'Stark',
     productCategory: 'figurine'
   }

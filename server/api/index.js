@@ -16,6 +16,7 @@ const stripe = Stripe(apiKeySecret)
 router.use('/users', require('./users'))
 router.use('/orders', require('./orders'))
 router.use('/products', require('./products'))
+router.use('/admin', require('./admin'))
 
 router.post('/checkout', async (req, res, next) => {
   const {currency, email, tokenId, totalPrice, name} = req.body

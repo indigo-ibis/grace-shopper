@@ -8,11 +8,6 @@ class Checkout extends Component {
     this.props.getCart()
   }
 
-  // handleClick = () => {
-  //   axios.put('/api/orders/checkout')
-  //   console.log('order submitted')
-  // }
-
   render() {
     return (
       <>

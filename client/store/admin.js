@@ -16,21 +16,22 @@ export const getAllOrders = payload => ({
   payload
 })
 
-const getAllUsers = payload => ({type: GET_ALL_USERS, payload})
+export const getAllUsers = payload => ({type: GET_ALL_USERS, payload})
 
 //admin thunks
 export const getAllOrdersThunk = () => {
   return async dispatch => {
     const {data} = await Axios.get(`/api/admin/allOrders`)
-    console.log(data, 'DATA')
+    // console.log(data, 'DATA')
     dispatch(getAllOrders(data))
   }
 }
 
 export const getAllUsersThunk = () => async dispatch => {
   try {
-    const res = await axios.get('/api/admin/allUsers')
-    dispatch(getAllUsers(res.data))
+    const {data} = await Axios.get('api/admin/allUsers')
+    console.log(data, 'RESDOTDATA')
+    dispatch(getAllUsers(data))
   } catch (err) {
     console.error(err)
   }

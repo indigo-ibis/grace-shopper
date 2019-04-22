@@ -32,28 +32,12 @@ class ProductPage extends React.Component {
     if (!this.state.loaded) {
       return <h1>Loading...</h1>
     }
-    console.log(this.props.order, 'ORDER')
-    console.log(
-      'SINGLE PROPS',
-      this.props.order.cartArr[0] ? this.props.order.cartArr[0].id : null
-    )
-    console.log(this.props.order, 'CART')
     const product = this.props.product
     return (
       <div>
         <img src={product.imageUrl} />
         <h1>{product.name}</h1>
-        <button
-          onClick={() =>
-            this.props.addProduct(
-              this.props.order.cartArr[0]
-                ? this.props.order.cartArr[0].id
-                : null,
-              product.id,
-              1
-            )
-          }
-        >
+        <button onClick={() => this.props.addProduct(product.id, 1)}>
           Add to Cart
         </button>
         {(product.price / 100).toLocaleString('en-US', {
@@ -76,8 +60,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(getCartThunk()),
     loadProduct: id => dispatch(loadProduct(id)),
-    addProduct: (orderId, productId, quant) =>
-      dispatch(addItemThunk(orderId, productId, quant))
+    addProduct: (productId, quant) => dispatch(addItemThunk(productId, quant))
   }
 }
 

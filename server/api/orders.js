@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, LineItem} = require('../db/models')
+const {User, Order, LineItem, Product} = require('../db/models')
 const {adminGateway} = require('./gateways')
 module.exports = router
 
@@ -12,14 +12,6 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// function adminGateway(req,res,next){
-//   if(req.user.isAdmin){
-//     next()
-//   } else{
-//     res.json({"no"})
-//   }
-// }
-
 //Find all items
 router.get('/allitems', adminGateway, async (req, res, next) => {
   try {
@@ -30,26 +22,48 @@ router.get('/allitems', adminGateway, async (req, res, next) => {
   }
 })
 
-//Update Quantity of an item in cart
-router.put('/cart', async (req, res, next) => {
-  try {
-    await LineItem.update(
-      {quantity: +req.body.quantity},
-      {
-        where: {
-          id: +req.body.id
-        },
-        returning: true
-      }
-    )
-    res.sendStatus(201)
-  } catch (err) {
-    next(err)
+//Create cart on the session
+router.get('/mycart', async (req, res, next) => {
+  if (!req.session.cartId) {
+    const newOrder = await Order.create({
+      // checks if there was a userId sent (meaning they're logged in), otherwise null
+      userId: +req.session.passport.user || null,
+      fullfillmentStatus: 'inCart'
+    })
+    req.session.cartId = newOrder.id
+    res.json(newOrder)
+  } else {
+    const order = await Order.findByPk(req.session.cartId, {
+      include: [
+        {
+          model: LineItem,
+          order: [['createdAt', 'asc']],
+          include: [{model: Product}]
+        }
+      ]
+    })
+    res.json(order)
   }
 })
 
-router.get('/mycart', (req, res, next) => {
-  res.json(req.session.cart)
+router.put('/mycart', async (req, res, next) => {
+  try {
+    const lineItem = await LineItem.findByPk(req.body.id, {
+      include: [{model: Order, include: [{model: User}]}]
+    })
+    if (
+      lineItem.order.user.id === null ||
+      lineItem.order.user.id === req.user.id
+    ) {
+      await lineItem
+        .update({quantity: req.body.quantity})
+        .then(() => res.sendStatus(201))
+    } else {
+      res.send('no')
+    }
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/:orderId', async (req, res, next) => {
@@ -60,11 +74,10 @@ router.get('/:orderId', async (req, res, next) => {
     if (!order) {
       res.sendStatus(404)
     } else {
-      const user = await order.getUser();
-      if (req.user && (req.user.isAdmin || user.id === req.user.id) ) {
+      const user = await order.getUser()
+      if (req.user && (req.user.isAdmin || user.id === req.user.id)) {
         res.json(order)
-      }
-      else {
+      } else {
         res.send('no')
       }
     }
@@ -85,17 +98,6 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-})
-
-//Create cart on the session
-router.put('/mycart', (req, res, next) => {
-  if (!req.session.cart) {
-    req.session.cart = {[req.body.productId]: 1}
-  } else {
-    req.session.cart[req.body.productId] = 1
-  }
-  console.log(req.session.cart)
-  res.json(req.session.cart)
 })
 
 // Submit order(Change status of order to 'unfullfilled')
@@ -143,17 +145,27 @@ router.get('/:orderId/clear', async (req, res, next) => {
 // ADD TO CART: adding a new line item to an order, for a USER
 router.post('/:orderId', async (req, res, next) => {
   try {
-    let test = await Order.findByPk(req.params.orderId)
-    if (!test) {
-      Order.create({id: req.params.orderId})
-    }
-    // await Order.findOrCreate({where: {id: req.params.orderId}})
-    const newLineItem = await LineItem.create({
-      orderId: req.params.orderId,
-      productId: req.body.productId,
-      quantity: req.body.quantity
+    const order = await Order.findByPk(req.params.orderId, {
+      include: [{model: LineItem}]
     })
-    res.json(newLineItem)
+    const relevantItem = order.lineItems.find(
+      element => element.productId === req.body.productId
+    )
+    /* if (!test) {
+      Order.create({id: req.params.orderId})
+    } */
+    if (relevantItem) {
+      await relevantItem
+        .update({quantity: relevantItem.quantity + 1})
+        .then(() => res.json(relevantItem))
+    } else {
+      const newLineItem = await LineItem.create({
+        orderId: req.params.orderId,
+        productId: req.body.productId,
+        quantity: req.body.quantity
+      })
+      res.json(newLineItem)
+    }
   } catch (err) {
     next(err)
   }
@@ -164,7 +176,6 @@ router.delete('/lineItem/:lineItemId', async (req, res, next) => {
   try {
     const lineItem = await LineItem.findByPk(req.params.lineItemId)
     await lineItem.destroy()
-    console.log(lineItem)
     res.sendStatus(200)
   } catch (err) {
     next(err)

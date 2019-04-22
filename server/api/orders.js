@@ -12,17 +12,25 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// function adminGateway(req,res,next){
+//   if(req.user.isAdmin){
+//     next()
+//   } else{
+//     res.json({"no"})
+//   }
+// }
+
 //Find all items
 router.get('/allitems', adminGateway, async (req, res, next) => {
   try {
     const lineItems = await LineItem.findAll()
-    console.log(lineItems)
     res.json(lineItems)
   } catch (err) {
     next(err)
   }
 })
 
+//Update Quantity of an item in cart
 router.put('/cart', async (req, res, next) => {
   try {
     await LineItem.update(
@@ -34,17 +42,20 @@ router.put('/cart', async (req, res, next) => {
         returning: true
       }
     )
-    // res.json(lineItem[1])
     res.sendStatus(201)
   } catch (err) {
     next(err)
   }
 })
 
+router.get('/mycart', (req, res, next) => {
+  res.json(req.session.cart)
+})
+
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId, {
-      include: [{model: LineItem, order:[['createdAt', 'asc']]}]
+      include: [{model: LineItem, order: [['createdAt', 'asc']]}]
     })
     if (!order) {
       res.sendStatus(404)
@@ -71,6 +82,32 @@ router.post('/', async (req, res, next) => {
       fullfillmentStatus: 'inCart'
     })
     res.json(newOrder)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//Create cart on the session
+router.put('/mycart', (req, res, next) => {
+  if (!req.session.cart) {
+    req.session.cart = {[req.body.productId]: 1}
+  } else {
+    req.session.cart[req.body.productId] = 1
+  }
+  console.log(req.session.cart)
+  res.json(req.session.cart)
+})
+
+// Submit order(Change status of order to 'unfullfilled')
+router.put('/checkout', async (req, res, next) => {
+  try {
+    await Order.update(
+      {
+        fullfillmentStatus: 'Unfullfilled'
+      },
+      {where: {userId: req.user.id}}
+    )
+    res.sendStatus(201)
   } catch (err) {
     next(err)
   }
@@ -109,8 +146,8 @@ router.post('/:orderId', async (req, res, next) => {
     let test = await Order.findByPk(req.params.orderId)
     if (!test) {
       Order.create({id: req.params.orderId})
-
     }
+    // await Order.findOrCreate({where: {id: req.params.orderId}})
     const newLineItem = await LineItem.create({
       orderId: req.params.orderId,
       productId: req.body.productId,

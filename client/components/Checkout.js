@@ -9,6 +9,9 @@ class Checkout extends Component {
   }
 
   render() {
+    if(!this.props.userCart.userId){
+      this.props.history.push('/')
+    }
     return (
       <>
         <div>Review Your Order</div>

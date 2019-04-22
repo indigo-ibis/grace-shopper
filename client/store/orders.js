@@ -7,9 +7,8 @@ const ADD_ITEM = 'ADD_ITEM'
 const UPDATE_CARTITEM = 'UPDATE_CARTITEM'
 
 const initialState = {
-  cartArr: []
+  cartArr: {}
 }
-
 //functions
 export const getCart = payload => ({
   type: GET_CART,
@@ -46,12 +45,10 @@ export const addItemThunk = (productId, quantity = 1) => {
        console.log(orderId)
     } */
     const {data} = await Axios.get('/api/orders/mycart')
-    console.log('got data: ', data)
     const data2 = await Axios.post(`/api/orders/${data.id}`, {
       productId,
       quantity
     })
-    console.log('got data again from the post:', data2.data)
     dispatch(addItem(data2.data))
   }
 }

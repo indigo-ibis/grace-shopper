@@ -24,14 +24,38 @@ router.get('/allitems', adminGateway, async (req, res, next) => {
 
 //Create cart on the session
 router.get('/mycart', async (req, res, next) => {
+
+  if (req.user) {
+    console.log('loggin')
+    const order = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        fullfillmentStatus: 'inCart'
+      },
+      include: [
+        {
+          model: LineItem,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    if (order) {
+      res.json(order)
+    }
+  }
+
   if (!req.session.cartId) {
+
     const newOrder = await Order.create({
       // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: (req.session.passport ? req.user.id : null),
+      userId: (req.user ? req.user.id : null),
       fullfillmentStatus: 'inCart'
+    }, {
+      include: [{model: LineItem}]
     })
     req.session.cartId = newOrder.id
     res.json(newOrder)
+
   } else {
     const order = await Order.findByPk(req.session.cartId, {
       include: [
@@ -42,6 +66,10 @@ router.get('/mycart', async (req, res, next) => {
         }
       ]
     })
+    if (req.user) {
+      order.setUser(req.user)
+      console.log(order.userId)
+    }
     res.json(order)
   }
 })

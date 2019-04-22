@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Order, LineItem} = require('../db/models')
+const {adminGateway} = require('./gateways')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -20,7 +21,7 @@ router.get('/', async (req, res, next) => {
 // }
 
 //Find all items
-router.get('/allitems', async (req, res, next) => {
+router.get('/allitems', adminGateway, async (req, res, next) => {
   try {
     const lineItems = await LineItem.findAll()
     res.json(lineItems)
@@ -59,7 +60,13 @@ router.get('/:orderId', async (req, res, next) => {
     if (!order) {
       res.sendStatus(404)
     } else {
-      res.json(order)
+      const user = await order.getUser();
+      if (req.user && (req.user.isAdmin || user.id === req.user.id) ) {
+        res.json(order)
+      }
+      else {
+        res.send('no')
+      }
     }
   } catch (err) {
     next(err)

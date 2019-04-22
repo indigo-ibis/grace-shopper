@@ -1,10 +1,11 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
+const {adminGateway} = require('./gateways')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const filters = {};
+    const filters = {}
 
     if (req.query.house) {
       filters.house = req.query.house
@@ -14,9 +15,8 @@ router.get('/', async (req, res, next) => {
     }
 
     const products = await Product.findAll({
-      where : filters
+      where: filters
     })
-    console.log(filters);
     res.json(products)
   } catch (err) {
     next(err)
@@ -28,8 +28,7 @@ router.get('/:productId', async (req, res, next) => {
     const product = await Product.findByPk(req.params.productId)
     if (!product) {
       res.sendStatus(404)
-    }
-    else {
+    } else {
       res.json(product)
     }
   } catch (err) {
@@ -37,14 +36,14 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', adminGateway, async (req, res, next) => {
   try {
     const newProduct = await Product.create({
-      name : req.body.name,
-      price : req.body.price,
-      imageUrl : req.body.imageUrl,
-      house : req.body.house,
-      productCategory : req.body.productCategory
+      name: req.body.name,
+      price: req.body.price,
+      imageUrl: req.body.imageUrl,
+      house: req.body.house,
+      productCategory: req.body.productCategory
     })
     res.json(newProduct)
   } catch (err) {

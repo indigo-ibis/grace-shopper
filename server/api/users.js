@@ -78,6 +78,14 @@ router.post('/', async (req, res, next) => {
       email: req.body.email,
       password: req.body.password
     })
+    if (req.session.cartId) {
+      const cart = await Order.findOne({
+        where: {
+          id: req.session.cartId
+        }
+      })
+      cart.userId = newUser.id
+    }
     res.json(newUser)
   } catch (err) {
     next(err)

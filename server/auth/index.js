@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const Order = require('../db/models/orders')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -38,7 +39,18 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
+  if (req.user.googleId && req.session.cartId) {
+    const user = User.findOne({where: {googleId: req.user.googleId}})
+    const cart = await Order.findOne({
+      where: {
+        id: req.session.cartId
+      }
+    })
+    if (!cart.userId) {
+      cart.userId = user.id
+    }
+  }
   res.json(req.user)
 })
 

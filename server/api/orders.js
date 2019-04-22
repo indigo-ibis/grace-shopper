@@ -68,7 +68,6 @@ router.get('/mycart', async (req, res, next) => {
     })
     if (req.user) {
       order.setUser(req.user)
-      console.log(order.userId)
     }
     res.json(order)
   }
@@ -144,7 +143,7 @@ router.put('/checkout', async (req, res, next) => {
 router.put('/:orderId', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId)
-    if (!order) {
+    if (!order || order.userId !== null) {
       res.sendStatus(404)
     } else {
       await order.update({userId: req.body.userId}).then(res.json(order))
@@ -157,11 +156,18 @@ router.put('/:orderId', async (req, res, next) => {
 // clear an entire order/cart
 router.get('/:orderId/clear', async (req, res, next) => {
   try {
-    await LineItem.destroy({
-      where: {
-        orderId: req.params.orderId
-      }
-    }).then(() => res.sendStatus(200))
+    const order = await Order.findByPk(req.params.orderId)
+    if (order.userId !== req.user.id) {
+      res.send('no')
+    }
+    else {
+      await LineItem.destroy({
+        where: {
+          orderId: req.params.orderId
+        }
+      })
+      .then(() => res.sendStatus(200))
+    }
   } catch (err) {
     next(err)
   }
@@ -173,23 +179,25 @@ router.post('/:orderId', async (req, res, next) => {
     const order = await Order.findByPk(req.params.orderId, {
       include: [{model: LineItem}]
     })
-    const relevantItem = order.lineItems.find(
-      element => element.productId === req.body.productId
-    )
-    /* if (!test) {
-      Order.create({id: req.params.orderId})
-    } */
-    if (relevantItem) {
-      await relevantItem
-        .update({quantity: relevantItem.quantity + 1})
-        .then(() => res.json(relevantItem))
-    } else {
-      const newLineItem = await LineItem.create({
-        orderId: req.params.orderId,
-        productId: req.body.productId,
-        quantity: req.body.quantity
-      })
-      res.json(newLineItem)
+    if (order.userId !== req.user.id && order.userId !== null) {
+      res.send('no')
+    }
+    else {
+      const relevantItem = order.lineItems.find(
+        element => element.productId === req.body.productId
+      )
+      if (relevantItem) {
+        await relevantItem
+          .update({quantity: relevantItem.quantity + 1})
+          .then(() => res.json(relevantItem))
+      } else {
+        const newLineItem = await LineItem.create({
+          orderId: req.params.orderId,
+          productId: req.body.productId,
+          quantity: req.body.quantity
+        })
+        res.json(newLineItem)
+      }
     }
   } catch (err) {
     next(err)

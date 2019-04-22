@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
+const {adminGateway} = require('./gateways')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -37,7 +38,7 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', adminGateway, async (req, res, next) => {
   try {
     const newProduct = await Product.create({
       name : req.body.name,

@@ -34,24 +34,23 @@ export const updateCartItem = (quantity, id) => ({
 
 export const getCartThunk = () => {
   return async dispatch => {
-    const {data} = await Axios.get(`/api/users/cart`)
+    const {data} = await Axios.get(`/api/orders/mycart`)
     dispatch(getCart(data))
   }
 }
 
-export const addItemThunk = (orderId, productId, quantity = 1) => {
-  console.log(orderId, 'ORDER ID')
+export const addItemThunk = (productId, quantity = 1) => {
   return async dispatch => {
-    // if (!orderId) {
-    //   orderId = (await Axios.post(`/api/orders/`)).data
-    //   console.log(orderId)
-    // }
-    const {data} = await Axios.post(`/api/orders/${orderId}`, {
+    /* if (!orderId) {
+       orderId = (await Axios.post(`/api/orders/`)).data
+       console.log(orderId)
+    } */
+    const {data} = await Axios.get('/api/orders/mycart')
+    const data2 = await Axios.post(`/api/orders/${data.id}`, {
       productId,
       quantity
     })
-
-    dispatch(addItem(data))
+    dispatch(addItem(data2.data))
   }
 }
 
@@ -64,7 +63,7 @@ export const deleteCartItemThunk = itemId => {
 
 export const updateCartItemThunk = (quantity, id) => {
   return async dispatch => {
-    await Axios.put(`/api/orders/cart/`, {quantity, id})
+    await Axios.put(`/api/orders/mycart/`, {quantity, id})
     dispatch(updateCartItem(quantity, id))
   }
 }
@@ -76,27 +75,28 @@ const ordersReducer = function(state = initialState, action) {
     case ADD_ITEM:
       return {
         ...state,
-        cartArr: [...state.cartArr, action.payload]
+        cartArr: {
+          ...state.cartArr,
+          lineItems: [...state.cartArr.lineItems, action.payload]
+        } //, action.payload}
       }
     case REMOVE_CARTITEM:
       let id = +action.payload
-      let newCartArr = [...state.cartArr]
-      let newCart = {...newCartArr[0]}
+      let newCart = {...state.cartArr}
       newCart.lineItems = newCart.lineItems.filter(item => item.id !== id)
-      console.log(newCart)
       return {
         ...state,
-        cartArr: [newCart]
+        cartArr: newCart
       }
     case UPDATE_CARTITEM:
       id = +action.id
       let quantity = action.quantity
-      newCartArr = [...state.cartArr]
-      newCart = {...newCartArr[0]}
-      newCart.lineItems.find(item => item.id === id).quantity = quantity
+      newCart = {...state.cartArr}
+      let newLineItems = [...newCart.lineItems]
+      newLineItems.find(item => item.id === id).quantity = quantity
       return {
         ...state,
-        cartArr: [newCart]
+        cartArr: {...newCart, lineItems: newLineItems}
       }
     default:
       return state

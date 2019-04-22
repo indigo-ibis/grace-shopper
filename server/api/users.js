@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Order, LineItem, Product} = require('../db/models')
+const {userGateway, userOrAdminGateway} = require('./gateways')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -40,7 +41,7 @@ router.get('/cart', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/orders', async (req, res, next) => {
+router.get('/:userId/orders', userGateway, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {
@@ -104,7 +105,7 @@ router.get('/orderhistory', async (req, res, next) => {
   }
 })
 
-router.delete('/:userId', async (req, res, next) => {
+router.delete('/:userId', userOrAdminGateway, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     if (!user) {

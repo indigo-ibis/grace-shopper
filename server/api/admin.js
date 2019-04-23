@@ -49,20 +49,24 @@ router.post('/', adminGateway, async (req, res, next) => {
 })
 
 // editing an order's fullfillment Status
-router.put('/changeorderstatus/:orderId/:newStatus', async (req, res, next) => {
-  try {
-    const order = await Order.findByPk(req.params.orderId)
-    if (!order) {
-      res.sendStatus(404)
-    } else {
-      await order
-        .update({fullfillmentStatus: req.params.newStatus})
-        .then(res.json('success'))
+router.put(
+  '/changeorderstatus/:orderId/:newStatus',
+  adminGateway,
+  async (req, res, next) => {
+    try {
+      const order = await Order.findByPk(req.params.orderId)
+      if (!order) {
+        res.sendStatus(404)
+      } else {
+        await order
+          .update({fullfillmentStatus: req.params.newStatus})
+          .then(res.json('success'))
+      }
+    } catch (err) {
+      next(err)
     }
-  } catch (err) {
-    next(err)
   }
-})
+)
 
 router.put('/checkout', async (req, res, next) => {
   try {

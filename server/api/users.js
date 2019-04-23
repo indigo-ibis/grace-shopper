@@ -114,20 +114,3 @@ router.get('/orderhistory', async (req, res, next) => {
     next(err)
   }
 })
-
-router.delete('/:userId', userOrAdminGateway, async (req, res, next) => {
-  try {
-    const user = await User.findByPk(req.params.userId)
-    if (!user) {
-      res.sendStatus(404)
-    } else {
-      await user
-        .update({
-          isBanned: true
-        })
-        .then(() => res.json(user))
-    }
-  } catch (err) {
-    next(err)
-  }
-})

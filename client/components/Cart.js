@@ -4,10 +4,13 @@ import {CartDisplay} from '.'
 
 export default () => {
   return (
-    <div>
-      <h1>Here is my Cart</h1>
+    <div className="cart">
+      <h1>Cart</h1>
+      <hr />
       <CartDisplay />
-      <Link to="/checkout">Proceed to CheckOut</Link>
+      <Link to="/checkout">
+        <h2>Proceed to CheckOut</h2>
+      </Link>
     </div>
   )
 }

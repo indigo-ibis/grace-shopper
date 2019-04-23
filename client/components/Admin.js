@@ -1,8 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getAllOrdersThunk} from '../store/admin'
-import {getAllUsersThunk} from '../store/admin'
-import {changeOrderStatusThunk} from '../store/admin'
+import {
+  getAllOrdersThunk,
+  getAllUsersThunk,
+  changeOrderStatusThunk,
+  deleteUserThunk,
+  deleteOrderThunk
+} from '../store/admin'
+// import {getAllUsersThunk} from '../store/admin'
+// import {changeOrderStatusThunk} from '../store/admin'
 
 export class Admin extends Component {
   componentDidMount() {
@@ -58,7 +64,9 @@ export class Admin extends Component {
                         </td>
                         <td>{el.totalPrice}</td>
                         <td>
-                          <button>x</button>
+                          <button onClick={() => this.props.deleteOrder(el.id)}>
+                            x
+                          </button>
                         </td>
                       </tr>
                     )
@@ -99,7 +107,9 @@ export class Admin extends Component {
                         <td>{String(el.isAdmin)}</td>
 
                         <td>
-                          <button>x</button>
+                          <button onClick={() => this.props.deleteUser(el.id)}>
+                            x
+                          </button>
                         </td>
                       </tr>
                     )
@@ -122,7 +132,9 @@ const mapDispatch = dispatch => ({
   getAllOrders: () => dispatch(getAllOrdersThunk()),
   getAllUsers: () => dispatch(getAllUsersThunk()),
   changeStatus: (orderId, status) =>
-    dispatch(changeOrderStatusThunk(orderId, status))
+    dispatch(changeOrderStatusThunk(orderId, status)),
+  deleteUser: userId => dispatch(deleteUserThunk(userId)),
+  deleteOrder: orderId => dispatch(deleteOrderThunk(orderId))
 })
 
 export default connect(mapState, mapDispatch)(Admin)

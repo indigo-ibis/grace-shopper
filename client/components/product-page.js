@@ -27,7 +27,7 @@ class ProductPage extends React.Component {
       this.props.loadProduct(this.props.match.params.productId)
     }
   }
-
+  //className="fullSize"
   render() {
     if (!this.state.loaded) {
       return <h1>Loading...</h1>
@@ -35,10 +35,10 @@ class ProductPage extends React.Component {
     const product = this.props.product
     return (
       <div className="itemInfo">
-        <img className="fullSize" src={product.imageUrl} />
+        <img src={product.imageUrl} />
         <div>
-          <h1>{product.name}</h1>
-          <div className="itemInfo">
+          <h1 style={{color: 'white'}}>{product.name}</h1>
+          <div className="itemInfo1">
             <span>
               {(product.price / 100).toLocaleString('en-US', {
                 style: 'currency',

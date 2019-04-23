@@ -17,23 +17,25 @@ class Navbar extends Component {
     return (
       <div>
         <NavLink to="/">
-          <img src="/GOTheader.jpg" />
+          <img src="/GOTheader.jpg" style={{width: '99%'}} />
         </NavLink>
 
-        <div id='topBar'>
-          <span>Hello, <b>{this.props.name}</b></span>
+        <div id="topBar">
+          <span>
+            Hello, <b>{this.props.name}</b>
+          </span>
           {isLoggedIn ? (
-              <span>
-                <a href="#" onClick={this.props.handleClick}>
-                  {' '}
-                  Logout{' '}
-                </a>
-              </span>
+            <span>
+              <a href="#" onClick={this.props.handleClick}>
+                {' '}
+                Logout{' '}
+              </a>
+            </span>
           ) : (
-              <span>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
-              </span>
+            <span>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </span>
           )}
         </div>
 
@@ -56,7 +58,9 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    name: state.user.firstName ? state.user.firstName + ' ' + state.user.lastName : 'Guest'
+    name: state.user.firstName
+      ? state.user.firstName + ' ' + state.user.lastName
+      : 'Guest'
   }
 }
 

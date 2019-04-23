@@ -67,29 +67,48 @@ router.put(
   }
 )
 
-router.put('/checkout', async (req, res, next) => {
+//Delete a User
+router.delete('/delete/:userId', adminGateway, async (req, res, next) => {
   try {
-    await Order.update(
-      {
-        fullfillmentStatus: 'Unfullfilled'
-      },
-      {where: {userId: req.user.id}}
-    )
-    res.sendStatus(201)
+    await User.destroy({where: {id: req.params.userId}})
+    res.status(200).send('User Destroyed')
   } catch (err) {
     next(err)
   }
 })
 
 // clear an entire order/cart
-router.get('/:orderId/clear', adminGateway, async (req, res, next) => {
+router.delete('/:orderId/clear', adminGateway, async (req, res, next) => {
   try {
     await LineItem.destroy({
       where: {
         orderId: req.params.orderId
       }
-    }).then(() => res.sendStatus(200))
+    })
+    await Order.destroy({
+      where: {
+        id: req.params.orderId
+      }
+    })
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
 })
+
+// router.delete('/:userId', adminGateway, async (req, res, next) => {
+//   try {
+//     const user = await User.findByPk(req.params.userId)
+//     if (!user) {
+//       res.sendStatus(404)
+//     } else {
+//       await user
+//         .update({
+//           isBanned: true
+//         })
+//         .then(() => res.json(user))
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// })

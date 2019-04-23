@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {loadSelectedProducts} from '../store'
 import {SingleProductDisplay} from '.'
 import queryString from 'query-string'
+import Banners from './Banners'
 
 class productsDisplay extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class productsDisplay extends React.Component {
       return <h1>Loading...</h1>
     }
     return (
-      <div>
+      <div className="all-product">
         <div>
           <Link to="/products?house=stark"> Stark </Link>
           <Link to="/products?house=targaryan"> Targaryan </Link>

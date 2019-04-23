@@ -44,7 +44,7 @@ export const addItemThunk = (productId, quantity = 1) => {
        orderId = (await Axios.post(`/api/orders/`)).data
        console.log(orderId)
     } */
-    const data = await Axios.get('/api/orders/mycart')
+    const {data} = await Axios.get('/api/orders/mycart')
     const data2 = await Axios.post(`/api/orders/${data.id}`, {
       productId,
       quantity

@@ -20,7 +20,7 @@ class Checkout extends Component {
         this.props.userCart.lineItems.length ? (
           <>
             <div>Review Your Order</div>
-            <CartDisplay />
+            <CartDisplay displayOnly={true} />
             <PurchaseBtn {...this.props} />
           </>
         ) : (

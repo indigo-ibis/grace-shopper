@@ -8,7 +8,6 @@ import {
 
 class CartDisplay extends Component {
   constructor(props) {
-    console.log('in cart display')
     super(props)
     this.state = {
       loaded: false,
@@ -36,14 +35,11 @@ class CartDisplay extends Component {
       return <h1>Uh oh...</h1>
     }
     if (this.state.loaded) {
-      const lineItems = this.props.userCart.lineItems;
+      const lineItems = this.props.userCart.lineItems
 
-      const totalPrice = lineItems.reduce(
-        (sum, {quantity, product}) => {
-          return sum + quantity * product.price
-        },
-        0
-      )
+      const totalPrice = lineItems.reduce((sum, {quantity, product}) => {
+        return sum + quantity * product.price
+      }, 0)
 
       return (
         <div className="cartDisplay">
@@ -54,31 +50,33 @@ class CartDisplay extends Component {
                   <div className="lineItemInfo">
                     <div>
                       <img className="preview" src={elem.product.imageUrl} />
-                      <div>
-                        <button
-                          type="button"
-                          onClick={() => this.props.deleteCart(elem.id)}
-                          className="delete"
-                        >
-                          x
-                        </button>
-                        <select
-                          defaultValue={elem.quantity}
-                          onChange={evt =>
-                            this.props
-                              .updateCart(evt.target.value, elem.id)
-                              .catch(err => this.setState({isErr: true}))
-                          }
-                        >
-                          {Array.from({length: 10}, (x, i) => i + 1).map(
-                            val => (
-                              <option key={val} value={val}>
-                                {val}
-                              </option>
-                            )
-                          )}
-                        </select>
-                      </div>
+                      {!this.props.displayOnly && (
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => this.props.deleteCart(elem.id)}
+                            className="delete"
+                          >
+                            x
+                          </button>
+                          <select
+                            defaultValue={elem.quantity}
+                            onChange={evt =>
+                              this.props
+                                .updateCart(evt.target.value, elem.id)
+                                .catch(err => this.setState({isErr: true}))
+                            }
+                          >
+                            {Array.from({length: 10}, (x, i) => i + 1).map(
+                              val => (
+                                <option key={val} value={val}>
+                                  {val}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                      )}
                     </div>
                     <div>
                       <b>{elem.product.name}</b>

@@ -26,7 +26,6 @@ router.get('/allitems', adminGateway, async (req, res, next) => {
 router.get('/mycart', async (req, res, next) => {
 
   if (req.user) {
-    console.log('loggin')
     const order = await Order.findOne({
       where: {
         userId: req.user.id,
@@ -44,19 +43,7 @@ router.get('/mycart', async (req, res, next) => {
     }
   }
 
-  if (!req.session.cartId) {
-
-    const newOrder = await Order.create({
-      // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: (req.user ? req.user.id : null),
-      fullfillmentStatus: 'inCart'
-    }, {
-      include: [{model: LineItem}]
-    })
-    req.session.cartId = newOrder.id
-    res.json(newOrder)
-
-  } else {
+  if (req.session.cartId) {
     const order = await Order.findByPk(req.session.cartId, {
       include: [
         {
@@ -70,6 +57,17 @@ router.get('/mycart', async (req, res, next) => {
       order.setUser(req.user)
     }
     res.json(order)
+  }
+  else {
+    const newOrder = await Order.create({
+      // checks if there was a userId sent (meaning they're logged in), otherwise null
+      userId: (req.user ? req.user.id : null),
+      fullfillmentStatus: 'inCart'
+    }, {
+      include: [{model: LineItem}]
+    })
+    req.session.cartId = newOrder.id
+    res.json(newOrder)
   }
 })
 
@@ -179,7 +177,7 @@ router.post('/:orderId', async (req, res, next) => {
     const order = await Order.findByPk(req.params.orderId, {
       include: [{model: LineItem}]
     })
-    if (order.userId !== req.user.id && order.userId !== null) {
+    if (res.user && order.userId !== req.user.id && order.userId !== null) {
       res.send('no')
     }
     else {

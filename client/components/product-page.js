@@ -34,16 +34,24 @@ class ProductPage extends React.Component {
     }
     const product = this.props.product
     return (
-      <div>
-        <img src={product.imageUrl} />
-        <h1>{product.name}</h1>
-        <button onClick={() => this.props.addProduct(product.id, 1)}>
-          Add to Cart
-        </button>
-        {(product.price / 100).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        })}
+      <div className="itemInfo">
+        <img className="fullSize" src={product.imageUrl} />
+        <div>
+          <h1>{product.name}</h1>
+          <div className="itemInfo">
+            <span>
+              {(product.price / 100).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })}
+            </span>
+            <span>
+              <button onClick={() => this.props.addProduct(product.id, 1)}>
+                Add to Cart
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     )
   }

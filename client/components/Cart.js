@@ -43,6 +43,7 @@ export class Cart extends Component {
                     <button
                       type="button"
                       onClick={() => this.props.deleteCart(elem.id)}
+                      className='delete'
                     >
                       x
                     </button>

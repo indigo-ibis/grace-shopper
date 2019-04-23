@@ -40,7 +40,7 @@ export class Admin extends Component {
                       <tr key={el.id}>
                         <td>{el.id}</td>
                         <td>{el.createdAt}</td>
-                        <td>-{el.userId}</td>
+                        <td>{el.userId}</td>
                         <td>
                           <select
                             onChange={evt =>
@@ -93,7 +93,7 @@ export class Admin extends Component {
                       <tr key={el.id}>
                         <td>{el.id}</td>
                         <td>{el.createdAt}</td>
-                        <td>-{el.firstName}</td>
+                        <td>{el.firstName}</td>
                         <td>{el.lastName}</td>
                         <td>{el.email}</td>
                         <td>

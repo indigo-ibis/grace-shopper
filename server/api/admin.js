@@ -58,9 +58,8 @@ router.put(
       if (!order) {
         res.sendStatus(404)
       } else {
-        await order
-          .update({fullfillmentStatus: req.params.newStatus})
-          .then(res.json('success'))
+        await order.update({fullfillmentStatus: req.params.newStatus})
+        res.json('success')
       }
     } catch (err) {
       next(err)

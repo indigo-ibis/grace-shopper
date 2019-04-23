@@ -17,7 +17,7 @@ export class Admin extends Component {
   }
 
   render() {
-    console.log(this.props, 'PROPSSSSSSSSS')
+//    console.log(this.props, 'PROPSSSSSSSSS')
     return (
       <div>
         <section>

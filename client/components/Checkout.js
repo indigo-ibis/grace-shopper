@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getCartThunk} from '../store/orders'
 import PurchaseBtn from './PurchaseBtn'
+import {CartDisplay} from '.'
 
 class Checkout extends Component {
   componentDidMount() {
@@ -12,13 +13,14 @@ class Checkout extends Component {
     if (Object.keys(this.props.userCart).length && !this.props.userEmail) {
       this.props.history.push('/signup')
     }
-    console.log(this.props)
+//    console.log(this.props)
     return (
       <div>
         {this.props.userCart.lineItems &&
         this.props.userCart.lineItems.length ? (
           <>
             <div>Review Your Order</div>
+            <CartDisplay displayOnly={true} />
             <PurchaseBtn {...this.props} />
           </>
         ) : (

@@ -5,7 +5,7 @@ import '../../secrets'
 
 class PurchaseBtn extends Component {
   onToken = async token => {
-    const {totalPrice} = this.props.userCart[0]
+    const {totalPrice} = this.props.userCart
     const {id, email} = token
     const data = {
       currency: 'usd',
@@ -15,7 +15,7 @@ class PurchaseBtn extends Component {
       name: token.card.name
     }
     try {
-      const res = await axios.post('api/checkout', data)
+      await axios.post('api/checkout', data)
       await axios.put('/api/orders/checkout')
       this.props.history.push('/')
     } catch (err) {
@@ -32,7 +32,7 @@ class PurchaseBtn extends Component {
 
   render() {
     const apiKey = process.env.STRIPE_API_KEY
-    const {totalPrice} = this.props.userCart[0] ? this.props.userCart[0] : 0
+    const {totalPrice} = this.props.userCart ? this.props.userCart : 0
     return (
       <StripeCheckout
         stripeKey={apiKey}
@@ -43,7 +43,7 @@ class PurchaseBtn extends Component {
         image="https://stripe.com/img/documentation/checkout/marketplace.png"
         label="Here, Take my money"
         panelLabel="Money me"
-        email="test@user.com"
+        email={this.props.userEmail}
         locale="auto"
         currency="USD"
         alipay

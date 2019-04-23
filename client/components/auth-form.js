@@ -41,7 +41,12 @@ const AuthForm = props => {
               <label htmlFor="lastName">
                 <small>Last Name</small>
               </label>
-              <input name="lastName" type="text" required pattern="[a-zA-Z]+" />
+              <input
+                name="lastName"
+                type="text"
+                required
+                pattern="[a-zA-Z-]+"
+              />
             </div>
           </>
         ) : (

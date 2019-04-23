@@ -24,7 +24,6 @@ router.get('/allitems', adminGateway, async (req, res, next) => {
 
 //Create cart on the session
 router.get('/mycart', async (req, res, next) => {
-
   if (req.user) {
     const order = await Order.findOne({
       where: {
@@ -57,15 +56,17 @@ router.get('/mycart', async (req, res, next) => {
       order.setUser(req.user)
     }
     res.json(order)
-  }
-  else {
-    const newOrder = await Order.create({
-      // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: (req.user ? req.user.id : null),
-      fullfillmentStatus: 'inCart'
-    }, {
-      include: [{model: LineItem}]
-    })
+  } else {
+    const newOrder = await Order.create(
+      {
+        // checks if there was a userId sent (meaning they're logged in), otherwise null
+        userId: req.user ? req.user.id : null,
+        fullfillmentStatus: 'inCart'
+      },
+      {
+        include: [{model: LineItem}]
+      }
+    )
     req.session.cartId = newOrder.id
     res.json(newOrder)
   }
@@ -76,7 +77,7 @@ router.put('/mycart', async (req, res, next) => {
     const lineItem = await LineItem.findByPk(req.body.id, {
       include: [{model: Order, include: [{model: User}]}]
     })
-    if ( !lineItem.order.user || lineItem.order.user.id === req.user.id ) {
+    if (!lineItem.order.user || lineItem.order.user.id === req.user.id) {
       await lineItem
         .update({quantity: req.body.quantity})
         .then(() => res.sendStatus(201))
@@ -157,14 +158,12 @@ router.get('/:orderId/clear', async (req, res, next) => {
     const order = await Order.findByPk(req.params.orderId)
     if (order.userId !== req.user.id) {
       res.send('no')
-    }
-    else {
+    } else {
       await LineItem.destroy({
         where: {
           orderId: req.params.orderId
         }
-      })
-      .then(() => res.sendStatus(200))
+      }).then(() => res.sendStatus(200))
     }
   } catch (err) {
     next(err)
@@ -179,8 +178,7 @@ router.post('/:orderId', async (req, res, next) => {
     })
     if (res.user && order.userId !== req.user.id && order.userId !== null) {
       res.send('no')
-    }
-    else {
+    } else {
       const relevantItem = order.lineItems.find(
         element => element.productId === req.body.productId
       )

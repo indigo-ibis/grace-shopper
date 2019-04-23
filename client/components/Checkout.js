@@ -9,8 +9,8 @@ class Checkout extends Component {
   }
 
   render() {
-    if(!this.props.userCart.userId){
-      this.props.history.push('/')
+    if (Object.keys(this.props.userCart).length && !this.props.userEmail) {
+      this.props.history.push('/login')
     }
     return (
       <>
@@ -21,7 +21,8 @@ class Checkout extends Component {
   }
 }
 const mapStateToProps = state => ({
-  userCart: state.orders.cartArr
+  userCart: state.orders.cartArr,
+  userEmail: state.user.email
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -48,7 +48,7 @@ class CartDisplay extends Component {
               return (
                 <div className="singleLineItem" key={elem.id}>
                   <div className="lineItemInfo">
-                    <div>
+                    <div className="iteminfo-one">
                       <img className="preview" src={elem.product.imageUrl} />
                       {!this.props.displayOnly && (
                         <div>

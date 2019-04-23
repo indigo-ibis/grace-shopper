@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {loadSelectedProducts} from '../store'
 import {SingleProductDisplay} from '.'
 import queryString from 'query-string'
@@ -67,7 +67,7 @@ class productsDisplay extends React.Component {
           <Link to="/products?house=tully"> Tully </Link>
         </div>
 
-        <div>
+        <div className="gridDisplay">
           {this.props.products.map(product => (
             <SingleProductDisplay key={product.id} {...product} />
           ))}

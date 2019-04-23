@@ -37,41 +37,46 @@ export class Cart extends Component {
               lineItems.map(elem => {
                 return (
                   <div className="singleLineItem" key={elem.id}>
-                    <div>
-                      {elem.product.name}
-                      <br />
-                      <b>Quantity:</b> {elem.quantity}
-                      <br />
-                      <b>Price</b>:{' '}
-                      {(
-                        elem.quantity *
-                        elem.product.price /
-                        100
-                      ).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                      })}
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => this.props.deleteCart(elem.id)}
-                        className="delete"
-                      >
-                        x
-                      </button>
-                      <select
-                        defaultValue={elem.quantity}
-                        onChange={evt =>
-                          this.props
-                            .updateCart(evt.target.value, elem.id)
-                            .catch(err => this.setState({isErr: true}))
-                        }
-                      >
-                        {Array.from({length: 10}, (x, i) => i + 1).map(val => (
-                          <option value={val}>{val}</option>
-                        ))}
-                      </select>
+                    <div className="lineItemInfo">
+                      <div>
+                        <img className="preview" src={elem.product.imageUrl} />
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => this.props.deleteCart(elem.id)}
+                            className="delete"
+                          >
+                            x
+                          </button>
+                          <select
+                            defaultValue={elem.quantity}
+                            onChange={evt =>
+                              this.props
+                                .updateCart(evt.target.value, elem.id)
+                                .catch(err => this.setState({isErr: true}))
+                            }
+                          >
+                            {Array.from({length: 10}, (x, i) => i + 1).map(
+                              val => <option value={val}>{val}</option>
+                            )}
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <b>{elem.product.name}</b>
+                        <br />
+                        <b>Quantity:</b> {elem.quantity}
+                        <br />
+                        <b>Price</b>:{' '}
+                        {(
+                          elem.quantity *
+                          elem.product.price /
+                          100
+                        ).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD'
+                        })}
+                      </div>
                     </div>
                   </div>
                 )

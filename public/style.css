@@ -79,6 +79,9 @@ form div {
 .singleLineItem {
   padding: 15px 10px;
 }
+.lineItemInfo {
+  display: flex;
+}
 
 #topBar {
   display: flex;

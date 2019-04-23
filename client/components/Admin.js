@@ -41,7 +41,7 @@ export class Admin extends Component {
                         <td>{el.createdAt}</td>
                         <td>-{el.userId}</td>
                         <td>
-                          <select>
+                          <select className='adminSelect'>
                             <option value="test">
                               {el.fullfillmentStatus}
                             </option>
@@ -88,7 +88,7 @@ export class Admin extends Component {
                         <td>{el.lastName}</td>
                         <td>{el.email}</td>
                         <td>
-                          <select>
+                          <select className='adminSelect'>
                             <option value="test">{el.isAdmin}</option>
                           </select>
                         </td>

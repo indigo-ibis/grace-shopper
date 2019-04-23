@@ -19,7 +19,17 @@ export class Cart extends Component {
   }
 
   render() {
+//    console.log(this.props.userCart)
+
     if (this.state.loaded) {
+
+      const totalPrice = this.props.userCart.lineItems.reduce(
+        (sum, {quantity, product}) => {
+          return sum + (quantity * product.price)
+        }
+        , 0
+      )
+
       let lineItems
       if (this.props.userCart) {
         lineItems = this.props.userCart.lineItems
@@ -57,7 +67,11 @@ export class Cart extends Component {
                             }
                           >
                             {Array.from({length: 10}, (x, i) => i + 1).map(
-                              val => <option value={val}>{val}</option>
+                              val => (
+                                <option key={val} value={val}>
+                                  {val}
+                                </option>
+                              )
                             )}
                           </select>
                         </div>
@@ -84,7 +98,7 @@ export class Cart extends Component {
           </div>
           <h1>
             Total Price:{' '}
-            {(this.props.userCart.totalPrice / 100).toLocaleString('en-US', {
+            {(totalPrice / 100).toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD'
             })}

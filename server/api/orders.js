@@ -40,6 +40,7 @@ router.get('/mycart', async (req, res, next) => {
     })
     if (order) {
       res.json(order)
+      return
     }
   }
 

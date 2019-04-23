@@ -73,6 +73,18 @@ const ordersReducer = function(state = initialState, action) {
     case GET_CART:
       return {...state, cartArr: action.payload}
     case ADD_ITEM:
+      const itemAlreadyExists = state.cartArr.lineItems.findIndex( product => product.id === action.payload.id );
+      if (itemAlreadyExists !== -1) {
+        newLineItems = [...state.cartArr.lineItems]
+        newLineItems[itemAlreadyExists] = action.payload
+        return {
+          ...state,
+          cartArr: {
+            ...state.cartArr,
+            lineItems : newLineItems
+          }
+        }
+      }
       return {
         ...state,
         cartArr: {

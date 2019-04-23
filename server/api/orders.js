@@ -33,6 +33,7 @@ router.get('/mycart', async (req, res, next) => {
       include: [
         {
           model: LineItem,
+          order: [['createdAt', 'asc']],
           include: [{model: Product}]
         }
       ]
@@ -64,7 +65,12 @@ router.get('/mycart', async (req, res, next) => {
         fullfillmentStatus: 'inCart'
       },
       {
-        include: [{model: LineItem}]
+        include: [
+          {
+            model: LineItem,
+            order: [['createdAt', 'asc']]
+          }
+        ]
       }
     )
     req.session.cartId = newOrder.id

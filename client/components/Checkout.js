@@ -10,13 +10,21 @@ class Checkout extends Component {
 
   render() {
     if (Object.keys(this.props.userCart).length && !this.props.userEmail) {
-      this.props.history.push('/login')
+      this.props.history.push('/signup')
     }
+    console.log(this.props)
     return (
-      <>
-        <div>Review Your Order</div>
-        <PurchaseBtn {...this.props} />
-      </>
+      <div>
+        {this.props.userCart.lineItems &&
+        this.props.userCart.lineItems.length ? (
+          <>
+            <div>Review Your Order</div>
+            <PurchaseBtn {...this.props} />
+          </>
+        ) : (
+          <h1>There is Nothing in your cart.</h1>
+        )}
+      </div>
     )
   }
 }

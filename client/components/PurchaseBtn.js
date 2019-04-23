@@ -18,6 +18,7 @@ class PurchaseBtn extends Component {
       await axios.post('api/checkout', data)
       await axios.put('/api/orders/checkout')
       this.props.history.push('/')
+      alert('Thanks for making a purchase')
     } catch (err) {
       console.log('error')
       console.error(err.message)
@@ -27,7 +28,7 @@ class PurchaseBtn extends Component {
   //   console.log('hi')
   // }
   // onClosed() {
-  //   console.log(this.props, this.state)
+  //   console.log(this.props)
   // }
 
   render() {
@@ -51,9 +52,8 @@ class PurchaseBtn extends Component {
         billingAddress
         shippingAddress
         zipCode
-        opened={this.onOpened}
-        closed={this.onClosed}
-        {...this.state}
+        // opened={this.onOpened}
+        // closed={this.onClosed}
       />
     )
   }

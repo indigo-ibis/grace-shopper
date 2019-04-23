@@ -4,15 +4,6 @@ module.exports = router
 const apiKeySecret = process.env.STRIPE_SECRET_KEY
 const stripe = Stripe(apiKeySecret)
 
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next()
-//   } else {
-//     console.error('Bad Request')
-//     res.redirect('/')
-//   }
-// }
-
 router.use('/users', require('./users'))
 router.use('/orders', require('./orders'))
 router.use('/products', require('./products'))

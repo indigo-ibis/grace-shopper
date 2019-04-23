@@ -161,10 +161,10 @@ const seed = async () => {
       })
     )
 
-    console.log(green('Seeding success!'))
+    console.log('Seeding success!')
     db.close()
   } catch (err) {
-    console.error(red('Oh dear!!!!! Something went awry :/!'))
+    console.error('Oh dear!!!!! Something went awry :/!')
     console.error(err)
     db.close()
   }

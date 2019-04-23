@@ -2,7 +2,9 @@ const router = require('express').Router()
 const Stripe = require('stripe')
 module.exports = router
 const apiKeySecret = process.env.STRIPE_SECRET_KEY
-const stripe = Stripe(apiKeySecret)
+const stripe = Stripe(
+  'sk_test_bTGwI5dJ7j4WiBHdmUffoSqO00hTA9JOGd' || apiKeySecret
+)
 
 // function ensureAuthenticated(req, res, next) {
 //   if (req.isAuthenticated()) {

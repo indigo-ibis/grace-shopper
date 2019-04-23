@@ -77,6 +77,13 @@ export class Cart extends Component {
                 )
               })}
           </div>
+          <h1>
+            Total Price:{' '}
+            {(this.props.userCart.totalPrice / 100).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            })}
+          </h1>
           <Link to="/checkout">Proceed to CheckOut</Link>
         </div>
       )

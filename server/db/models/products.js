@@ -28,7 +28,7 @@ const Products = db.define('products', {
           'Tyrell',
           'Baratheon',
           'Greyjoy',
-          'Tully'
+          'Martell'
         ]
       ]
     }

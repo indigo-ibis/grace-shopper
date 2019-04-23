@@ -39,11 +39,43 @@ const productsArr = [
   },
   {
     name: 'Life Size Iron Throne Replica',
-    price: 3299,
+    price: 32990,
     imageUrl:
       'https://www.nydailynews.com/resizer/95Phg7t-CYpYCtvig_M9Ithy2Mg=/800x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/D3V5DH4ZRZDHLAZNQ66CNA5RFQ.JPG',
     house: 'Stark',
     productCategory: 'figurine'
+  },
+  {
+    name: 'Tyrion Figurine',
+    price: 2990,
+    imageUrl:
+      'https://shop.eaglemoss.com/images/shop_products/7e7c20dc-9f36-4cbd-a718-ad34d48cadaf.jpg',
+    house: 'Lannister',
+    productCategory: 'figurine'
+  },
+  {
+    name: 'Custom King Robert Baratheon Bust',
+    price: 2229,
+    imageUrl:
+      'https://www.sashacustoms.co.uk/uploads/images/sashaimages/thrones/1-1-robert-a.jpg',
+    house: 'Baratheon',
+    productCategory: 'bust'
+  },
+  {
+    name: 'Paper Mache Theon Grayjoy',
+    price: 2229,
+    imageUrl:
+      'https://www.picclickimg.com/d/l400/pict/333138251661_/Funko-Mystery-Minis-Game-of-Thrones-Theon-Greyjoy.jpg',
+    house: 'Greyjoy',
+    productCategory: 'bust'
+  },
+  {
+    name: 'Oberin Figurine',
+    price: 12229,
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/41lnmlmnklL._SY355_.jpg',
+    house: 'Martell',
+    productCategory: 'bust'
   }
 ]
 
@@ -89,24 +121,40 @@ const ordersArr = [
 const usersArr = [
   {
     email: 'admin@email.com',
-    firstName: 'test',
-    lastName: 'last',
+    firstName: 'ADMIN',
+    lastName: 'thereisnospoon',
     password: '123',
     isAdmin: true,
     isBanned: false
   },
   {
     email: 'admin2@email.com',
-    firstName: 'test',
-    lastName: 'last',
+    firstName: 'Jane',
+    lastName: 'Janerson',
     password: '123',
     isAdmin: true,
     isBanned: false
   },
   {
     email: 'user@email.com',
-    firstName: 'test',
-    lastName: 'last',
+    firstName: 'Fred',
+    lastName: 'Frederick',
+    password: '123',
+    isAdmin: false,
+    isBanned: false
+  },
+  {
+    email: 'user1@email.com',
+    firstName: 'Fred',
+    lastName: 'Frederick',
+    password: '123',
+    isAdmin: false,
+    isBanned: false
+  },
+  {
+    email: 'user2@email.com',
+    firstName: 'James',
+    lastName: 'Frederickson',
     password: '123',
     isAdmin: false,
     isBanned: false

@@ -28,6 +28,20 @@ LineItem.belongsTo(Product)
 // OrderItem.hasOne(Product)
 // Product.belongsToMany(OrderItem)
 
+Order.prototype.getTotalPrice = async () => {
+  const associatedLineItems = await LineItem.findAll({
+    where: {
+      orderId : this.id
+    },
+    include: [{model: Product}]
+  });
+  let total = 0;
+  associatedLineItems.forEach(lineItem =>
+    total += lineItem.quantity * lineItem.product.price);
+  console.log(Math.round(total))
+  return Math.round(total)
+}
+
 module.exports = {
   User,
   LineItem,

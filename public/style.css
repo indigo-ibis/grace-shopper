@@ -6,6 +6,10 @@ body {
   /* background-blend-mode: darken; */
 }
 
+li {
+  list-style: none;
+}
+
 .banners {
   display: flex;
   flex-wrap: row wrap;
@@ -67,6 +71,16 @@ form div {
   flex-grow: 0;
   text-align: center;
   margin: 10px;
+}
+
+.cartDisplay {
+  font-size: 24px;
+}
+.singleLineItem {
+  padding: 15px 10px;
+}
+.lineItemInfo {
+  display: flex;
 }
 
 #topBar {

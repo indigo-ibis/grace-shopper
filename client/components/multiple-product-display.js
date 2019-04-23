@@ -64,7 +64,7 @@ class productsDisplay extends React.Component {
           <Link to="/products?house=tyrell"> Tyrell </Link>
           <Link to="/products?house=baratheon"> Baratheon </Link>
           <Link to="/products?house=greyjoy"> Greyjoy </Link>
-          <Link to="/products?house=tully"> Tully </Link>
+          <Link to="/products?house=tully"> Martell </Link>
         </div>
 
         <div className="gridDisplay">

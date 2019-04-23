@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllOrdersThunk} from '../store/admin'
 import {getAllUsersThunk} from '../store/admin'
+import {changeOrderStatusThunk} from '../store/admin'
 
 export class Admin extends Component {
   componentDidMount() {
@@ -39,12 +40,20 @@ export class Admin extends Component {
                       <tr key={el.id}>
                         <td>{el.id}</td>
                         <td>{el.createdAt}</td>
-                        <td>-{el.userId}</td>
+                        <td>{el.userId}</td>
                         <td>
-                          <select className='adminSelect'>
+                          <select
+                            onChange={evt =>
+                              this.props.changeStatus(el.id, evt.target.value)
+                            }
+                            className="adminSelect"
+                          >
                             <option value="test">
                               {el.fullfillmentStatus}
                             </option>
+                            <option value="Unfullfilled">Unfullfilled</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="inCart">inCart</option>
                           </select>
                         </td>
                         <td>{el.totalPrice}</td>
@@ -84,11 +93,11 @@ export class Admin extends Component {
                       <tr key={el.id}>
                         <td>{el.id}</td>
                         <td>{el.createdAt}</td>
-                        <td>-{el.firstName}</td>
+                        <td>{el.firstName}</td>
                         <td>{el.lastName}</td>
                         <td>{el.email}</td>
                         <td>
-                          <select className='adminSelect'>
+                          <select className="adminSelect">
                             <option value="test">{el.isAdmin}</option>
                           </select>
                         </td>
@@ -115,7 +124,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getAllOrders: () => dispatch(getAllOrdersThunk()),
-  getAllUsers: () => dispatch(getAllUsersThunk())
+  getAllUsers: () => dispatch(getAllUsersThunk()),
+  changeStatus: (orderId, status) =>
+    dispatch(changeOrderStatusThunk(orderId, status))
 })
 
 export default connect(mapState, mapDispatch)(Admin)

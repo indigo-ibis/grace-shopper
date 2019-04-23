@@ -56,15 +56,17 @@ router.get('/mycart', async (req, res, next) => {
       order.setUser(req.user)
     }
     res.json(order)
-  }
-  else {
-    const newOrder = await Order.create({
-      // checks if there was a userId sent (meaning they're logged in), otherwise null
-      userId: (req.user ? req.user.id : null),
-      fullfillmentStatus: 'inCart'
-    }, {
-      include: [{model: LineItem}]
-    })
+  } else {
+    const newOrder = await Order.create(
+      {
+        // checks if there was a userId sent (meaning they're logged in), otherwise null
+        userId: req.user ? req.user.id : null,
+        fullfillmentStatus: 'inCart'
+      },
+      {
+        include: [{model: LineItem}]
+      }
+    )
     req.session.cartId = newOrder.id
     res.json(newOrder)
   }
@@ -174,11 +176,7 @@ router.post('/:orderId', async (req, res, next) => {
     const order = await Order.findByPk(req.params.orderId, {
       include: [{model: LineItem}]
     })
-<<<<<<< HEAD
-    if (req.user && order.userId !== req.user.id && order.userId !== null) {
-=======
     if (res.user && order.userId !== req.user.id && order.userId !== null) {
->>>>>>> master
       res.send('no')
     } else {
       const relevantItem = order.lineItems.find(

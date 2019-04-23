@@ -1,12 +1,14 @@
 body {
   font-family: sans-serif;
+  width: 100vw;
 }
 
 .front-page {
   height: 200vh;
-  background-size: 100vw 150vh;
-  background-image: url("bg.jpg"), linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  background-size: 100vw 200vh;
+  background-image: url("bg.jpg"), linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1));
   background-blend-mode: multiply;
+  background-repeat: repeat-y;
 }
 
 li {

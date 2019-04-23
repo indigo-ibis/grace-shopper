@@ -25,18 +25,6 @@ const Orders = db.define('orders', {
     type: Sequelize.INTEGER,
     validate: {
       min: 0
-    },
-    get() {
-      let total = 0
-      LineItem.findAll({
-        where: {orderId: this.id},
-        include: [{model: Product}]
-      }).then(lineItems => {
-        lineItems.forEach(lineItem => {
-          total += lineItem.quantity * lineItem.product.price
-        })
-        return total
-      })
     }
   },
   discountAmount: {

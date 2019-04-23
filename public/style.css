@@ -1,5 +1,9 @@
 body {
   font-family: sans-serif;
+  /* background: rgba(0, 0, 0, 0.4); */
+  /* background-image: url("bg.jpg"); */
+  /* background-size: 70%; */
+  /* background-blend-mode: darken; */
 }
 
 .banners {
@@ -133,13 +137,13 @@ td {
 
 /* demo styles */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400, 500, 300, 700);
 
 section {
   margin: 50px;
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
   background: linear-gradient(to right, #25c481, #25b7c4);
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* follow me template */

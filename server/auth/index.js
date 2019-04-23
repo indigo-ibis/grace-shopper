@@ -40,7 +40,7 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
-  if (req.user.googleId && req.session.cartId) {
+  if (req.user && req.user.googleId && req.session.cartId) {
     const user = User.findOne({where: {googleId: req.user.googleId}})
     const cart = await Order.findOne({
       where: {

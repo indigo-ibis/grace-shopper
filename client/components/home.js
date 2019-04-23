@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export const Home = props => {
+  const {email} = props
   if (props.isAdmin) {
     props.history.push('/admin')
   }

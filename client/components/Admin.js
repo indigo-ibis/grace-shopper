@@ -78,7 +78,7 @@ export class Admin extends Component {
                   <th>First Name </th>
                   <th>Last Name</th>
                   <th>Email</th>
-                  <th>Permissions</th>
+                  <th>Is Admin</th>
                   <th>Delete User</th>
                 </tr>
               </thead>
@@ -96,11 +96,7 @@ export class Admin extends Component {
                         <td>{el.firstName}</td>
                         <td>{el.lastName}</td>
                         <td>{el.email}</td>
-                        <td>
-                          <select className="adminSelect">
-                            <option value="test">{el.isAdmin}</option>
-                          </select>
-                        </td>
+                        <td>{String(el.isAdmin)}</td>
 
                         <td>
                           <button>x</button>

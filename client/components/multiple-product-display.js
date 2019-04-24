@@ -58,7 +58,7 @@ class productsDisplay extends React.Component {
     }
     return (
       <div className="all-product">
-        <div>
+{/*         <div>
           <Link to="/products?house=stark"> Stark </Link>
           <Link to="/products?house=targaryan"> Targaryan </Link>
           <Link to="/products?house=lannister"> Lannister </Link>
@@ -66,7 +66,7 @@ class productsDisplay extends React.Component {
           <Link to="/products?house=baratheon"> Baratheon </Link>
           <Link to="/products?house=greyjoy"> Greyjoy </Link>
           <Link to="/products?house=tully"> Martell </Link>
-        </div>
+        </div> */}
 
         <div className="gridDisplay">
           {this.props.products.map(product => (

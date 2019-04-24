@@ -21,19 +21,19 @@ class Navbar extends Component {
         </NavLink>
 
         <div id="topBar">
-          <span>
+          <span style={{color: "white"}}>
             Hello, <b>{this.props.name}</b>
           </span>
           {isLoggedIn ? (
             <span>
               <a href="#" onClick={this.props.handleClick}>
-                {' '}
-                Logout{' '}
+                Logout
               </a>
             </span>
           ) : (
             <span>
               <Link to="/login">Login</Link>
+              {' '}
               <Link to="/signup">Sign Up</Link>
             </span>
           )}

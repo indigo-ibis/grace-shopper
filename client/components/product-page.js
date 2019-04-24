@@ -29,13 +29,25 @@ class ProductPage extends React.Component {
   }
   //className="fullSize"
   render() {
+    console.log(this.props)
     if (!this.state.loaded) {
       return <h1>Loading...</h1>
     }
     const product = this.props.product
     return (
       <div className="itemInfo">
-        <img src={product.imageUrl} />
+        <div>
+          <img src={product.imageUrl} />
+          <p>
+            <button
+              onClick={() => {
+                this.props.history.goBack()
+              }}
+            >
+              Go Back
+            </button>
+          </p>
+        </div>
         <div>
           <h1 style={{color: 'white'}}>{product.name}</h1>
           <div className="itemInfo1">
@@ -46,7 +58,13 @@ class ProductPage extends React.Component {
               })}
             </span>
             <span>
-              <button onClick={() => this.props.addProduct(product.id, 1)}>
+              <button
+                onClick={async () => {
+                  await this.props
+                    .addProduct(product.id, 1)
+                    .then(() => this.props.history.push('/cart'))
+                }}
+              >
                 Add to Cart
               </button>
             </span>

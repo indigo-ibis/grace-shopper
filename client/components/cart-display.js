@@ -37,9 +37,10 @@ class CartDisplay extends Component {
     if (this.state.loaded) {
       const lineItems = this.props.userCart.lineItems || []
 
-      const totalPrice = lineItems.reduce((sum, {quantity, product}) => {
-        return sum + quantity * product.price
-      }, 0)
+      const totalPrice = lineItems.reduce(
+        (sum, lineItem) => sum + lineItem.quantity * lineItem.product.price,
+        0
+      )
 
       return (
         <div className="cartDisplay">

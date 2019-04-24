@@ -2,6 +2,10 @@
  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
  text-align: center; */
 
+* {
+  font-size: 20px;
+}
+
 body {
   font-family: sans-serif;
   width: 100vw;
@@ -81,7 +85,6 @@ img {
 .itemInfo {
   display: flex;
   justify-content: space-around;
-  font-size: 20px;
 }
 
 .itemInfo img {
@@ -92,6 +95,11 @@ img {
 
 .iteminfo-one {
   margin-right: 20px;
+}
+
+.itemInfo1 {
+  display: flex;
+  justify-content: space-around;
 }
 
 .gridDisplay {
@@ -176,7 +184,6 @@ form div {
 
 button {
   padding: 10px;
-  font-size: 20px;
 }
 .delete {
   padding: 2px 5px;

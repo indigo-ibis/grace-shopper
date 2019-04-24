@@ -21,7 +21,7 @@ export const Home = props => {
     //     </Link>
     //     <Link to="/products?house=targaryan">
     //       <img src="/Targaryen.jpg" />
-    //     </Link> ious week out of that announcement do not leaveWe are
+    //     </Link>
     //     <Link to="/products?house=lannister">
     //       <img src="/Lannister.jpg" />
     //     </Link>

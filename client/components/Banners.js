@@ -6,25 +6,25 @@ export default function Banners() {
     <div className="front-page">
       <div className="banners">
         <Link to="/products?house=stark">
-          <img src="/Stark.jpg" />
+          <img src="/Stark.png" />
         </Link>
         <Link to="/products?house=targaryan">
-          <img src="/Targaryen.jpg" />
+          <img src="/Targaryen.png" />
         </Link>
         <Link to="/products?house=lannister">
-          <img src="/Lannister.jpg" />
+          <img src="/Lannister.png" />
         </Link>
         <Link to="/products?house=tyrell">
-          <img src="/Tyrell.jpg" />
+          <img src="/Tyrell.png" />
         </Link>
         <Link to="/products?house=baratheon">
-          <img src="/Baratheon.jpg" />
+          <img src="/Baratheon.png" />
         </Link>
         <Link to="/products?house=greyjoy">
-          <img src="/Greyjoy.jpg" />
+          <img src="/Greyjoy.png" />
         </Link>
         <Link to="/products?house=tully">
-          <img src="/Martell.jpg" />
+          <img src="/Martell.png" />
         </Link>
       </div>
     </div>

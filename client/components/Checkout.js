@@ -18,7 +18,8 @@ class Checkout extends Component {
         {this.props.userCart.lineItems &&
         this.props.userCart.lineItems.length ? (
           <div className="order-review">
-            <div>Review Your Order</div>
+            <h1>Review Your Order</h1>
+            <hr />
             <CartDisplay displayOnly={true} />
             <div className="purchase">
               <PurchaseBtn {...this.props} />

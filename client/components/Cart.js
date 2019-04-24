@@ -9,7 +9,7 @@ export default () => {
       <hr />
       <CartDisplay />
       <Link to="/checkout">
-        <h2>Proceed to CheckOut</h2>
+        <h2 className="proceed-checkout">Proceed to CheckOut</h2>
       </Link>
     </div>
   )

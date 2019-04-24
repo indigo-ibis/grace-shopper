@@ -1,10 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import {loadSelectedProducts} from '../store'
 import {SingleProductDisplay} from '.'
 import queryString from 'query-string'
-import Banners from './Banners'
 
 class productsDisplay extends React.Component {
   constructor(props) {
@@ -59,13 +58,13 @@ class productsDisplay extends React.Component {
     return (
       <div className="all-product">
         <div>
-          <Link to="/products?house=stark"> Stark </Link>
+          {/* <Link to="/products?house=stark"> Stark </Link>
           <Link to="/products?house=targaryan"> Targaryan </Link>
           <Link to="/products?house=lannister"> Lannister </Link>
           <Link to="/products?house=tyrell"> Tyrell </Link>
           <Link to="/products?house=baratheon"> Baratheon </Link>
           <Link to="/products?house=greyjoy"> Greyjoy </Link>
-          <Link to="/products?house=tully"> Martell </Link>
+          <Link to="/products?house=tully"> Martell </Link> */}
         </div>
 
         <div className="gridDisplay">
